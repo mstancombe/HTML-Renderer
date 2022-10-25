@@ -34,10 +34,10 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: Restore dependencies
-      run: dotnet restore Core.slnf
+      run: dotnet restore Source/HtmlRendererCore.sln
 
     - name: Build
-      run: dotnet build --no-restore Core.slnf -p:Version=${{ steps.version.outputs.version_str }}
+      run: dotnet build --no-restore Source/HtmlRendererCore.sln -p:Version=${{ steps.version.outputs.version_str }}
 
     - name: Pack
       run: dotnet pack 'Source/HtmlRendererCore.sln' --include-symbols --include-source --no-build -p:Version=${{ steps.version.outputs.version_str }} -p:SymbolPackageFormat=snupkg -o dist
