@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    #Extract the version from the github tag
+    - id: version
+      run:  echo "::set-output name=version_str::`echo "${{ github.ref }}" | sed -n 's/.*v\(.*\)/\1/p'`"
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: TODO - Document Changes for Tagged Release
+        draft: true
+        prerelease: ${{ contains(steps.version.outputs.version_str, '-') }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore Core.slnf
+
+    - name: Build
+      run: dotnet build --no-restore Core.slnf -p:Version=${{ steps.version.outputs.version_str }}
+
+    - name: Pack
+      run: dotnet pack 'Source/HtmlRendererCore.sln' --include-symbols --include-source --no-build -p:Version=${{ steps.version.outputs.version_str }} -p:SymbolPackageFormat=snupkg -o dist
+
+    - name: Push to Nuget
+      run: dotnet nuget push dist/*.${{ steps.version.outputs.version_str }}.nupkg --api-key ${{ secrets.NUGET_ORG_MSTANCOMBE_KEY }} --source https://api.nuget.org/v3/index.json
+
+    - name: Add Core Nuget Packages as Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: dist/HtmlRendererCore.${{ steps.version.outputs.version_str }}.nupkg
+        asset_name: HtmlRendererCore.${{ steps.version.outputs.version_str }}.nupkg
+        asset_content_type: application/octet-stream
+
+    - name: Add Core Nuget Packages as Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: dist/HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg
+        asset_name: HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg
+        asset_content_type: application/octet-stream
