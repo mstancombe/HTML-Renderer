@@ -42,12 +42,6 @@ jobs:
     - name: Pack
       run: dotnet pack 'Source/HtmlRendererCore.sln' --include-symbols --include-source --no-build -p:Version=${{ steps.version.outputs.version_str }} -p:SymbolPackageFormat=snupkg -o dist
 
-    - name: Push Core to Nuget
-      run: dotnet nuget push dist/HtmlRendererCore.${{ steps.version.outputs.version_str }}.nupkg --api-key ${{ secrets.NUGET_ORG_MSTANCOMBE_KEY }} --source https://api.nuget.org/v3/index.json
-
-    - name: Push PdfSharp to Nuget
-      run: dotnet nuget push dist/HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg --api-key ${{ secrets.NUGET_ORG_MSTANCOMBE_KEY }} --source https://api.nuget.org/v3/index.json
-
     - name: Add Core Nuget Packages as Release Asset
       id: upload-release-asset-core
       uses: actions/upload-release-asset@v1
@@ -69,3 +63,9 @@ jobs:
         asset_path: dist/HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg
         asset_name: HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg
         asset_content_type: application/octet-stream
+
+    - name: Push Core to Nuget
+      run: dotnet nuget push dist/HtmlRendererCore.${{ steps.version.outputs.version_str }}.nupkg --api-key ${{ secrets.NUGET_ORG_MSTANCOMBE_KEY }} --source https://api.nuget.org/v3/index.json
+
+    - name: Push PdfSharp to Nuget
+      run: dotnet nuget push dist/HtmlRendererCore.PdfSharp.${{ steps.version.outputs.version_str }}.nupkg --api-key ${{ secrets.NUGET_ORG_MSTANCOMBE_KEY }} --source https://api.nuget.org/v3/index.json
