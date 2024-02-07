@@ -1,0 +1,6 @@
+@HtmlRenderer.Demo.Web.Api_HostAddress = http://localhost:5181
+
+GET {{HtmlRenderer.Demo.Web.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlRenderer.Demo.SkiaSharp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlRenderer.Demo.Console", "Demos\HtmlRenderer.Demo.Console\HtmlRenderer.Demo.Console.csproj", "{7E5B30E9-34C6-4123-B8A6-B50AC078DA53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlRenderer.Demo.Web.Api", "HtmlRenderer.Demo.Web.Api\HtmlRenderer.Demo.Web.Api.csproj", "{59590969-0677-4DC7-95B1-6D1442B71586}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{7E5B30E9-34C6-4123-B8A6-B50AC078DA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E5B30E9-34C6-4123-B8A6-B50AC078DA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E5B30E9-34C6-4123-B8A6-B50AC078DA53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59590969-0677-4DC7-95B1-6D1442B71586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59590969-0677-4DC7-95B1-6D1442B71586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59590969-0677-4DC7-95B1-6D1442B71586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59590969-0677-4DC7-95B1-6D1442B71586}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{46175F41-83B5-4E4E-BA90-775BA6AC144A} = {CF4F888A-71EE-4EDC-99BA-8A02B4B841F0}
 		{5E5E2495-4F7A-4C36-B7DF-3EBE71A5108A} = {CF4F888A-71EE-4EDC-99BA-8A02B4B841F0}
 		{7E5B30E9-34C6-4123-B8A6-B50AC078DA53} = {CF4F888A-71EE-4EDC-99BA-8A02B4B841F0}
+		{59590969-0677-4DC7-95B1-6D1442B71586} = {CF4F888A-71EE-4EDC-99BA-8A02B4B841F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4ABBC6A-EFE0-46EB-BEED-7C8017BA004C}

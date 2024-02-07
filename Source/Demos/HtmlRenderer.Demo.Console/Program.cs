@@ -23,10 +23,10 @@ var samples = SamplesLoader.TestSamples;
 foreach (var htmlSample in samples)
 {
     ////Just doing one test here.  Comment this for all of them.
-    if (!htmlSample.FullName.Contains("02", StringComparison.OrdinalIgnoreCase)) continue;
+    //if (!htmlSample.FullName.Contains("16", StringComparison.OrdinalIgnoreCase)) continue;
 
     await skia.GenerateSampleAsync(htmlSample);
-    //await pdfSharp.GenerateSampleAsync(htmlSample);
+    await pdfSharp.GenerateSampleAsync(htmlSample);
 }
 
 
