@@ -11,7 +11,7 @@ namespace HtmlRenderer.Demo.Web.Api.Controllers
         private readonly ILogger<PrinterController> _logger = logger;
 
 
-        [HttpGet(Name = "GetSampleNames")]
+        [HttpGet("SampleNames")]
         public IEnumerable<string> GetSampleNames()
         {
             return SamplesLoader
@@ -19,7 +19,7 @@ namespace HtmlRenderer.Demo.Web.Api.Controllers
                 .Select(s => s.Name);
         }
 
-        [HttpGet(Name = "Print")]
+        [HttpGet("Print")]
         public async Task<IActionResult> PrintSkia(string name)
         {
             var sample = GetSample(name);
@@ -33,7 +33,7 @@ namespace HtmlRenderer.Demo.Web.Api.Controllers
         }
 
 
-        [HttpGet(Name = "PrintLegacy")]
+        [HttpGet("PrintLegacy")]
         public async Task<IActionResult> PrintLegacy(string name)
         {
             var sample = GetSample(name);
@@ -49,7 +49,7 @@ namespace HtmlRenderer.Demo.Web.Api.Controllers
         private HtmlSample? GetSample(string name)
         {
             var sample = SamplesLoader.TestSamples
-                .Where(s => s.Name.StartsWith(name))
+                .Where(s => s.FullName.Contains(name, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault();
 
             return sample;
