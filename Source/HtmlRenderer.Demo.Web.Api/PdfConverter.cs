@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 using TheArtOfDev.HtmlRenderer.Demo.Common;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 
-namespace HtmlRenderer.Demo.Console
+namespace HtmlRenderer.Demo.Web.Api
 {
-    public class PdfSharpCoreConverter : SampleConverterFileBase
+    public class PdfSharpCoreConverter : SampleConverterBase, IStreamPdfGenerator
     {
-        public PdfSharpCoreConverter(string sampleRunIdentifier, string basePath) : base(sampleRunIdentifier, basePath)
-        {
-        }
-
-        public async Task GenerateSampleAsync(HtmlSample sample)
+        public async Task<Stream> GenerateSampleAsync(HtmlSample sample)
         {
             var config = new PdfGenerateConfig();
 
@@ -26,7 +22,10 @@ namespace HtmlRenderer.Demo.Console
             config.MarginBottom = 0;
 
             var pdf = await PdfGenerator.GeneratePdfAsync(sample.Html, config, imageLoad: OnImageLoaded);
-            pdf.Save(GetSamplePath(sample));
+            var stream = new MemoryStream();
+            pdf.Save(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream;
         }
     }
 }

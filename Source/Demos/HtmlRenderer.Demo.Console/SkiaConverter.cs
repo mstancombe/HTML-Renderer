@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlRenderer.Demo.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using TheArtOfDev.HtmlRenderer.SkiaSharp;
 
 namespace HtmlRenderer.Demo.Console
 {
-    public class SkiaConverter : SampleConverterBase
+    public class SkiaConverter : SampleConverterFileBase
     {
         public SkiaConverter(string sampleRunIdentifier, string basePath) : base(sampleRunIdentifier, basePath)
         {

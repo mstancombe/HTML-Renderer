@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Demos\HtmlRenderer.Demo.Common\HtmlRenderer.Demo.Common.csproj" />
+    <ProjectReference Include="..\HtmlRenderer.PdfSharp\HtmlRenderer.PdfSharp.csproj" />
+    <ProjectReference Include="..\HtmlRenderer.SkiaSharp\HtmlRenderer.SkiaSharp.csproj" />
+  </ItemGroup>
+
 </Project>

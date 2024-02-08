@@ -10,32 +10,17 @@ using TheArtOfDev.HtmlRenderer.Core;
 using TheArtOfDev.HtmlRenderer.Core.Entities;
 using TheArtOfDev.HtmlRenderer.Demo.Common;
 
-namespace HtmlRenderer.Demo.Console
+namespace HtmlRenderer.Demo.Common
 {
     public class SampleConverterBase
     {
-        private string _sampleRunIdentifier;
-        private string _thisTypeName;
-        private string _basePath;
-
-        public SampleConverterBase(string sampleRunIdentifier, string basePath) 
+        public SampleConverterBase()
         {
-            _sampleRunIdentifier = sampleRunIdentifier;
-            _basePath = basePath;
-            _thisTypeName = this.GetType().Name;
-
             this.OnImageLoaded += ImageLoad;
             this.OnStyleLoaded += StylesheetLoad;
         }
 
         public CssData CssData => null;
-
-        protected string GetSamplePath(HtmlSample sample)
-        {
-            var path = Path.Combine(_basePath, _sampleRunIdentifier);
-            Directory.CreateDirectory(path);
-            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + ".pdf");
-        }
 
         protected EventHandler<HtmlImageLoadEventArgs> OnImageLoaded;
         protected EventHandler<HtmlStylesheetLoadEventArgs> OnStyleLoaded;
@@ -54,6 +39,27 @@ namespace HtmlRenderer.Demo.Console
         internal void StylesheetLoad(object? sender, HtmlStylesheetLoadEventArgs e)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class SampleConverterFileBase : SampleConverterBase
+    {
+        private string _sampleRunIdentifier;
+        private string _thisTypeName;
+        private string _basePath;
+
+        public SampleConverterFileBase(string sampleRunIdentifier, string basePath) : base()
+        {
+            _sampleRunIdentifier = sampleRunIdentifier;
+            _basePath = basePath;
+            _thisTypeName = this.GetType().Name;
+        }
+
+        protected string GetSamplePath(HtmlSample sample)
+        {
+            var path = Path.Combine(_basePath, _sampleRunIdentifier);
+            Directory.CreateDirectory(path);
+            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + ".pdf");
         }
     }
 }
