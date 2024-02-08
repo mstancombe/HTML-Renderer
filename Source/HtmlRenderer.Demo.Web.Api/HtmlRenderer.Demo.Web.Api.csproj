@@ -1,20 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<InvariantGlobalization>true</InvariantGlobalization>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.6" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Demos\HtmlRenderer.Demo.Common\HtmlRenderer.Demo.Common.csproj" />
-    <ProjectReference Include="..\HtmlRenderer.PdfSharp\HtmlRenderer.PdfSharp.csproj" />
-    <ProjectReference Include="..\HtmlRenderer.SkiaSharp\HtmlRenderer.SkiaSharp.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Demos\HtmlRenderer.Demo.Common\HtmlRenderer.Demo.Common.csproj" />
+		<ProjectReference Include="..\HtmlRenderer.PdfSharp\HtmlRenderer.PdfSharp.csproj" />
+		<ProjectReference Include="..\HtmlRenderer.SkiaSharp\HtmlRenderer.SkiaSharp.csproj" />
+	</ItemGroup>
 
 </Project>
