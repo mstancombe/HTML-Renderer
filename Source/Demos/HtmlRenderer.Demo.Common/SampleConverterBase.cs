@@ -55,11 +55,11 @@ namespace HtmlRenderer.Demo.Common
             _thisTypeName = this.GetType().Name;
         }
 
-        protected string GetSamplePath(HtmlSample sample)
+        protected string GetSamplePath(HtmlSample sample, string extension = ".pdf")
         {
             var path = Path.Combine(_basePath, _sampleRunIdentifier);
             Directory.CreateDirectory(path);
-            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + ".pdf");
+            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + extension);
         }
     }
 }

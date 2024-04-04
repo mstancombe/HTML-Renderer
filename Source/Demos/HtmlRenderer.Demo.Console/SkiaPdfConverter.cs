@@ -9,9 +9,9 @@ using TheArtOfDev.HtmlRenderer.SkiaSharp;
 
 namespace HtmlRenderer.Demo.Console
 {
-    public class SkiaConverter : SampleConverterFileBase
+    public class SkiaPdfConverter : SampleConverterFileBase
     {
-        public SkiaConverter(string sampleRunIdentifier, string basePath) : base(sampleRunIdentifier, basePath)
+        public SkiaPdfConverter(string sampleRunIdentifier, string basePath) : base(sampleRunIdentifier, basePath)
         {
         }
 

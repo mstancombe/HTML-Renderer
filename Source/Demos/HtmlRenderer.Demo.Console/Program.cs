@@ -13,7 +13,8 @@ if (args.Length > 0)
 //Probably won't be running a suite of tests more than once a second, so this will do.
 var runIdentifier = DateTime.Now.ToString("yyyyMMdd-hhmmss");
 
-var skia = new SkiaConverter(runIdentifier, basePath);
+var skia = new SkiaPdfConverter(runIdentifier, basePath);
+var svgSkia = new SkiaSvgConverter(runIdentifier, basePath);
 var pdfSharp = new PdfSharpCoreConverter(runIdentifier, basePath);
 
 SamplesLoader.Init("Console", typeof(Program).Assembly.GetName().Version.ToString());
@@ -23,10 +24,11 @@ var samples = SamplesLoader.TestSamples;
 foreach (var htmlSample in samples)
 {
     ////Just doing one test here.  Comment this for all of them.
-    //if (!htmlSample.FullName.Contains("16", StringComparison.OrdinalIgnoreCase)) continue;
+    if (!htmlSample.FullName.Contains("16", StringComparison.OrdinalIgnoreCase)) continue;
 
     await skia.GenerateSampleAsync(htmlSample);
-    await pdfSharp.GenerateSampleAsync(htmlSample);
+    await svgSkia.GenerateSampleAsync(htmlSample);
+    //await pdfSharp.GenerateSampleAsync(htmlSample);
 }
 
 
