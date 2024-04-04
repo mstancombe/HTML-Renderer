@@ -1,0 +1,16 @@
+@HtmlRenderer.Demo.Web.Api_HostAddress = http://localhost:5181
+
+GET {{HtmlRenderer.Demo.Web.Api_HostAddress}}/Printer/Samplenames
+Accept: application/json
+
+###
+
+GET {{HtmlRenderer.Demo.Web.Api_HostAddress}}/Printer/Print?name=Header
+Accept: application/pdf
+
+###
+
+GET {{HtmlRenderer.Demo.Web.Api_HostAddress}}/Printer/PrintLegacy?name=Header
+Accept: application/pdf
+
+###
