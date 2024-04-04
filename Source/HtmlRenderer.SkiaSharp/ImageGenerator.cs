@@ -67,92 +67,89 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         /// <param name="stylesheetLoad">optional: can be used to overwrite stylesheet resolution logic</param>
         /// <param name="imageLoad">optional: can be used to overwrite image resolution logic</param>
         /// <returns>the generated image of the html</returns>
-        public static async Task<SKCanvas> GenerateSvgAsync(
+        public static async Task GenerateSvgAsync(
             string html,
             Stream outputStream,
-            SKSize size,
+            int width,
+            int? height = null,
             CssData cssData = null,
             EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null,
             EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
         {
-            // create svg document to render the HTML into
-            var canvas = SKSvgCanvas.Create(new SKRect(0, 0, size.Width, size.Height), outputStream);
-
-            // add rendered image
-            await DrawSvgAsync(canvas, html, size, cssData, stylesheetLoad, imageLoad);
-            canvas.Dispose();
-
-            return canvas;
+            using (var container = await CreateHtmlContainer(html, width, cssData, stylesheetLoad, imageLoad))
+            {
+                var size = new SKSize(width, height ?? container.ActualSize.Height);
+                var canvas = SKSvgCanvas.Create(new SKRect(0, 0, width, height ?? container.ActualSize.Height), outputStream);
+                await DrawHtmlToCanvas(container, canvas);
+                canvas.Dispose();
+            }
         }
 
         /// <summary>
         /// Writes html to a bitmap image
         /// </summary>
         /// <param name="html">HTML source to create image from</param>
-        /// <param name="size">The size of the image</param>
         /// <param name="imageFormat">The file format used to encode the image.</param>
         /// <param name="quality">The quality level to use for the image. Quality range from 0-100. Higher values correspond to improved visual quality, but less compression.</param>
         /// <param name="cssData">optional: the style to use for html rendering (default - use W3 default style)</param>
         /// <param name="stylesheetLoad">optional: can be used to overwrite stylesheet resolution logic</param>
         /// <param name="imageLoad">optional: can be used to overwrite image resolution logic</param>
         /// <returns></returns>
-        public static async Task<SKCanvas> GenerateBitmapAsync(
+        public static async Task GenerateBitmapAsync(
             string html,
             Stream outputStream,
-            SKSize size,
             SKEncodedImageFormat imageFormat,
-            int quality,
+            int width,
+            int? height = null,
+            int quality = 100,
             CssData cssData = null,
             EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null,
             EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
         {
+            using (var container = await CreateHtmlContainer(html, width, cssData, stylesheetLoad, imageLoad))
+            {
+                var bitmap = new SKBitmap(width, height ?? (int)container.ActualSize.Height);
+                var canvas = new SKCanvas(bitmap);
+                await DrawHtmlToCanvas(container, canvas);
+                bitmap.Encode(outputStream, imageFormat, quality);
 
-            var bitmap = new SKBitmap((int)size.Width, (int)size.Height);
-            var canvas = new SKCanvas(bitmap);
-
-            // add rendered image
-            await DrawSvgAsync(canvas, html, size, cssData, stylesheetLoad, imageLoad);
-            bitmap.Encode(outputStream, imageFormat, quality);
-
-            return canvas;
+            }
         }
 
         /// <summary>
-        /// Create image pages from given HTML and appends them to the provided image document.<br/>
+        /// Creates a html container for the suupplied content. Given a width, this will
+        /// determine the actual height.
         /// </summary>
-        /// <param name="canvas">canvas to draw to</param>
-        /// <param name="html">HTML source to create image from</param>
-        /// <param name="cssData">optional: the style to use for html rendering (default - use W3 default style)</param>
-        /// <param name="stylesheetLoad">optional: can be used to overwrite stylesheet resolution logic</param>
-        /// <param name="imageLoad">optional: can be used to overwrite image resolution logic</param>
-        /// <returns>the generated image of the html</returns>
-        public static async Task DrawSvgAsync(
-            SKCanvas canvas,
-            string html,
-            SKSize size,
-            CssData cssData = null,
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null,
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+        private static async Task<HtmlContainer> CreateHtmlContainer(string html,
+            int width,
+            CssData? cssData = null,
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null,
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
-            using var container = new HtmlContainer();
+            var container = new HtmlContainer();
+
             if (stylesheetLoad != null)
                 container.StylesheetLoad += stylesheetLoad;
             if (imageLoad != null)
                 container.ImageLoad += imageLoad;
 
-            container.Location = new SKPoint(0, 0);
-            //container.MaxSize = size;
-            container.MaxSize = new SKSize(size.Width, 0);
-            container.PageSize = size;
-            container.MarginBottom = 0;
-            container.MarginLeft = 0;
-            container.MarginRight = 0;
-            container.MarginTop = 0;
-            container.ScrollOffset = new SKPoint(0, 0);
+            container.MaxSize = new SKSize(width, 0);
+            await container.SetHtml(html, cssData!);
 
-            await container.SetHtml(html, cssData);
+            // determine the actual height of the html we're rendering.
+            var docImageInfo = new SKImageInfo(width, width);
+            using (var s = SKSurface.Create(docImageInfo))
+            using (var g = s.Canvas)
+            {
+                await container.PerformLayout(g);
+            }
 
-            // layout the HTML with the page width restriction to know how many pages are required
+            container.PageSize = container.ActualSize;
+            return container;
+        }
+
+        private static async Task DrawHtmlToCanvas(HtmlContainer container, SKCanvas canvas)
+        {
             await container.PerformLayout(canvas);
             await container.PerformPaint(canvas);
         }
