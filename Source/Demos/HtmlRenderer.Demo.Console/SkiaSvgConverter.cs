@@ -19,16 +19,18 @@ namespace HtmlRenderer.Demo.Console
         public async Task GenerateSampleAsync(HtmlSample sample)
         {
             var size = new SKSize(500, 1000);
+            int width = 500;
+            int height = 50;
 
             using (var fileStream = File.Open(GetSamplePath(sample, ".svg"), FileMode.CreateNew))
             {
-                await ImageGenerator.GenerateSvgAsync(sample.Html, fileStream, size, imageLoad: OnImageLoaded);
+                await ImageGenerator.GenerateSvgAsync(sample.Html, fileStream, width, height, imageLoad: OnImageLoaded);
                 fileStream.Flush();
             }
 
             using (var fileStream = File.Open(GetSamplePath(sample, ".png"), FileMode.CreateNew))
             {
-                await ImageGenerator.GenerateBitmapAsync(sample.Html, fileStream, size, SKEncodedImageFormat.Png, 100, imageLoad: OnImageLoaded);
+                await ImageGenerator.GenerateBitmapAsync(sample.Html, fileStream, SKEncodedImageFormat.Png, width, imageLoad: OnImageLoaded);
                 fileStream.Flush();
             }
         }
