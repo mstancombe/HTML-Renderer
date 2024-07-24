@@ -202,6 +202,17 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         }
 
         /// <summary>
+        ///  Gets a value indicating whether this instance has Position = absolute.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is fixed; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsAbsolute
+        {
+            get => Position == CssConstants.Absolute;
+        }
+
+        /// <summary>
         /// Get the href link of the box (by default get "href" attribute)
         /// </summary>
         public virtual string HrefLink
@@ -650,6 +661,26 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                         left = 0;
                         top = 0;
                     }
+                    else if (Position == CssConstants.Absolute)
+                    {
+                        // find the first positioned parent.
+                        CssBox currentParent = ParentBox;
+                        CssBox positionedAncestor = null;
+                        while(currentParent != null && string.IsNullOrEmpty(currentParent.Position))
+                        {
+                            currentParent = currentParent.ParentBox;
+                        }
+                        positionedAncestor = currentParent;
+
+                        if (positionedAncestor != null)
+                        {
+                            var location = GetActualLocation(this.Left, this.Top);
+                            left = positionedAncestor.Location.X + location.X;
+                            top = positionedAncestor.Location.Y + location.Y;
+
+                            Location = new RPoint(left, top);
+                        }
+                    }
                     else
                     {
                         left = ContainingBlock.Location.X + ContainingBlock.ActualPaddingLeft + ActualMarginLeft + ContainingBlock.ActualBorderLeftWidth;
@@ -709,11 +740,11 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                     ActualBottom = prevSibling.ActualBottom;
                 }
             }
-            ActualBottom = Math.Max(ActualBottom, Location.Y + ActualHeight);
 
+            ActualBottom = Math.Max(ActualBottom, Location.Y + ActualHeight);
             await CreateListItemBoxAsync(g);
 
-            if (!IsFixed)
+            if (!IsFixed && !IsAbsolute)
             {
                 var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < 90999 ? ActualRight - HtmlContainer.Root.Location.X : 0);
                 HtmlContainer.ActualSize = CommonUtils.Max(HtmlContainer.ActualSize, new RSize(actualWidth, ActualBottom - HtmlContainer.Root.Location.Y));
@@ -1192,12 +1223,15 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         private double MarginBottomCollapse()
         {
             double margin = 0;
+
+            // Get the last child box that doesn't have absolute or fixed positioning.
+            var lastChildBox = _boxes.Where(b => b.Position != CssConstants.Fixed && b.Position != CssConstants.Absolute).LastOrDefault();
             if (ParentBox != null && ParentBox.Boxes.IndexOf(this) == ParentBox.Boxes.Count - 1 && _parentBox.ActualMarginBottom < 0.1)
             {
-                var lastChildBottomMargin = _boxes[_boxes.Count - 1].ActualMarginBottom;
+                var lastChildBottomMargin = lastChildBox?.ActualMarginBottom ?? 0;
                 margin = Height == "auto" ? Math.Max(ActualMarginBottom, lastChildBottomMargin) : lastChildBottomMargin;
             }
-            return Math.Max(ActualBottom, _boxes[_boxes.Count - 1].ActualBottom + margin + ActualPaddingBottom + ActualBorderBottomWidth);
+            return Math.Max(ActualBottom, (lastChildBox?.ActualBottom ?? 0) + margin + ActualPaddingBottom + ActualBorderBottomWidth);
         }
 
         /// <summary>
