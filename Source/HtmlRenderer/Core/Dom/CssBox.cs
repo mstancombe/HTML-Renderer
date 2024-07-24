@@ -664,17 +664,19 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                     else if (Position == CssConstants.Absolute)
                     {
                         // find the first positioned parent.
-                        var positionedParent = ParentBox;
-                        while(positionedParent != null && string.IsNullOrEmpty(positionedParent.Position))
+                        CssBox currentParent = ParentBox;
+                        CssBox positionedAncestor = null;
+                        while(currentParent != null && string.IsNullOrEmpty(currentParent.Position))
                         {
-                            positionedParent = positionedParent.ParentBox;
+                            currentParent = currentParent.ParentBox;
                         }
+                        positionedAncestor = currentParent;
 
-                        if (positionedParent != null)
+                        if (positionedAncestor != null)
                         {
                             var location = GetActualLocation(this.Left, this.Top);
-                            left = positionedParent.Location.X + location.X;
-                            top = positionedParent.Location.Y + location.Y;
+                            left = positionedAncestor.Location.X + location.X;
+                            top = positionedAncestor.Location.Y + location.Y;
 
                             Location = new RPoint(left, top);
                         }
@@ -1223,13 +1225,13 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             double margin = 0;
 
             // Get the last child box that doesn't have absolute or fixed positioning.
-            var lastChildBox = _boxes.Where(b => b.Position != CssConstants.Fixed && b.Position != CssConstants.Absolute).Last();
+            var lastChildBox = _boxes.Where(b => b.Position != CssConstants.Fixed && b.Position != CssConstants.Absolute).LastOrDefault();
             if (ParentBox != null && ParentBox.Boxes.IndexOf(this) == ParentBox.Boxes.Count - 1 && _parentBox.ActualMarginBottom < 0.1)
             {
-                var lastChildBottomMargin = lastChildBox.ActualMarginBottom;
+                var lastChildBottomMargin = lastChildBox?.ActualMarginBottom ?? 0;
                 margin = Height == "auto" ? Math.Max(ActualMarginBottom, lastChildBottomMargin) : lastChildBottomMargin;
             }
-            return Math.Max(ActualBottom, lastChildBox.ActualBottom + margin + ActualPaddingBottom + ActualBorderBottomWidth);
+            return Math.Max(ActualBottom, (lastChildBox?.ActualBottom ?? 0) + margin + ActualPaddingBottom + ActualBorderBottomWidth);
         }
 
         /// <summary>
