@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Web;
 
 namespace TheArtOfDev.HtmlRenderer.Core.Utils
 {
@@ -319,14 +320,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Utils
         {
             if (!string.IsNullOrEmpty(str))
             {
-                str = DecodeHtmlCharByCode(str);
-
-                str = DecodeHtmlCharByName(str);
-
-                foreach (var encPair in _encodeDecode)
-                {
-                    str = str.Replace(encPair.Key, encPair.Value);
-                }
+                str = HttpUtility.HtmlDecode(str);
             }
             return str;
         }
@@ -348,67 +342,5 @@ namespace TheArtOfDev.HtmlRenderer.Core.Utils
             }
             return str;
         }
-
-
-        #region Private methods
-
-        /// <summary>
-        /// Decode html special charecters encoded using char entity code (&#8364;)
-        /// </summary>
-        /// <param name="str">the string to decode</param>
-        /// <returns>decoded string</returns>
-        private static string DecodeHtmlCharByCode(string str)
-        {
-            var idx = str.IndexOf("&#", StringComparison.OrdinalIgnoreCase);
-            while (idx > -1)
-            {
-                bool hex = str.Length > idx + 3 && char.ToLower(str[idx + 2]) == 'x';
-                var endIdx = idx + 2 + (hex ? 1 : 0);
-
-                long num = 0;
-                while (endIdx < str.Length && CommonUtils.IsDigit(str[endIdx], hex))
-                    num = num * (hex ? 16 : 10) + CommonUtils.ToDigit(str[endIdx++], hex);
-                endIdx += (endIdx < str.Length && str[endIdx] == ';') ? 1 : 0;
-
-                string repl = string.Empty;
-                if (num >= 0 && num <= 0x10ffff && !(num >= 0xd800 && num <= 0xdfff))
-                    repl = Char.ConvertFromUtf32((int)num);
-                
-                str = str.Remove(idx, endIdx - idx);
-                str = str.Insert(idx, repl);
-
-                idx = str.IndexOf("&#", idx + 1);
-            }
-            return str;
-        }
-
-        /// <summary>
-        /// Decode html special charecters encoded using char entity name (&#euro;)
-        /// </summary>
-        /// <param name="str">the string to decode</param>
-        /// <returns>decoded string</returns>
-        private static string DecodeHtmlCharByName(string str)
-        {
-            var idx = str.IndexOf('&');
-            while (idx > -1)
-            {
-                var endIdx = str.IndexOf(';', idx);
-                if (endIdx > -1 && endIdx - idx < 8)
-                {
-                    var key = str.Substring(idx + 1, endIdx - idx - 1);
-                    char c;
-                    if (_decodeOnly.TryGetValue(key, out c))
-                    {
-                        str = str.Remove(idx, endIdx - idx + 1);
-                        str = str.Insert(idx, c.ToString());
-                    }
-                }
-
-                idx = str.IndexOf('&', idx + 1);
-            }
-            return str;
-        }
-
-        #endregion
     }
 }
