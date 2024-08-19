@@ -694,7 +694,8 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                                 ? prevSibling.ActualBottom + prevSibling.ActualBorderBottomWidth 
                                 : 0);
 
-                        Location = new RPoint(left, top);                        
+                        Location = new RPoint(left, top);
+                        
                         if (this.PageBreakBefore == CssConstants.Always || prevSibling?.PageBreakAfter == CssConstants.Always)
                         {
                             this.BreakPage(true);
