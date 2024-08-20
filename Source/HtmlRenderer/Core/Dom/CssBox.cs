@@ -700,9 +700,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                         {
                             this.BreakPage(true);
                         }
-                        else if (this.PageBreakInside == CssConstants.Avoid
-                            && ActualHeight + Location.Y > HtmlContainer.PageSize.Height
-                            && prevSibling != null)
+                        else if (this.PageBreakInside == CssConstants.Avoid && prevSibling != null)
                         {
                             // handle page break avoiding.
                             var pageLocationY = Location.Y % HtmlContainer.PageSize.Height;
