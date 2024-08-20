@@ -700,15 +700,6 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                         {
                             this.BreakPage(true);
                         }
-                        else if (this.PageBreakInside == CssConstants.Avoid && prevSibling != null)
-                        {
-                            // handle page break avoiding.
-                            var pageLocationY = Location.Y % HtmlContainer.PageSize.Height;
-                            if (ActualHeight + pageLocationY > HtmlContainer.PageSize.Height)
-                            {
-                                this.BreakPage(true);
-                            }
-                        }
 
                         //Start with the assumption this is zero height.
                         ActualBottom = Location.Y;
@@ -756,6 +747,19 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             {
                 var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < 90999 ? ActualRight - HtmlContainer.Root.Location.X : 0);
                 HtmlContainer.ActualSize = CommonUtils.Max(HtmlContainer.ActualSize, new RSize(actualWidth, ActualBottom - HtmlContainer.Root.Location.Y));
+
+                if (this.PageBreakInside == CssConstants.Avoid && prevSibling != null 
+                    && Display != CssConstants.TableCell)
+                {
+                    // handle page break avoiding.
+                    var pageLocationY = Location.Y % HtmlContainer.PageSize.Height;
+                    if (Size.Height + pageLocationY > HtmlContainer.PageSize.Height)
+                    {
+                        // offset the current box and all of it's children to the next page.
+                        var offset = HtmlContainer.PageSize.Height - pageLocationY;
+                        OffsetTop(offset + 1);
+                    }
+                }
             }
         }
 
