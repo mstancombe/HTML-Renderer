@@ -624,6 +624,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <param name="g">Device context to use</param>
         protected virtual async Task PerformLayoutImpAsync(RGraphics g)
         {
+            var prevSibling = DomUtils.GetPreviousSibling(this);
             if (Display != CssConstants.None)
             {
                 RectanglesReset();
@@ -652,7 +653,6 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
                 if (Display != CssConstants.TableCell)
                 {
-                    var prevSibling = DomUtils.GetPreviousSibling(this);
                     double left;
                     double top;
 
@@ -695,17 +695,19 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                                 : 0);
 
                         Location = new RPoint(left, top);
-                        
+
                         if (this.PageBreakBefore == CssConstants.Always || prevSibling?.PageBreakAfter == CssConstants.Always)
                         {
                             this.BreakPage(true);
                         }
-                        else if (this.PageBreakInside == CssConstants.Avoid
-                            && ActualHeight + Location.Y > HtmlContainer.PageSize.Height
-                            && prevSibling != null)
+                        else if (this.PageBreakInside == CssConstants.Avoid && prevSibling != null)
                         {
                             // handle page break avoiding.
-                            this.BreakPage(true);
+                            var pageLocationY = Location.Y % HtmlContainer.PageSize.Height;
+                            if (ActualHeight + pageLocationY > HtmlContainer.PageSize.Height)
+                            {
+                                this.BreakPage(true);
+                            }
                         }
 
                         //Start with the assumption this is zero height.
@@ -739,7 +741,6 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             }
             else
             {
-                var prevSibling = DomUtils.GetPreviousSibling(this);
                 if (prevSibling != null)
                 {
                     if (Location == RPoint.Empty)
