@@ -24,7 +24,7 @@ var samples = SamplesLoader.TestSamples;
 foreach (var htmlSample in samples)
 {
     ////Just doing one test here.  Comment this for all of them.
-    if (!htmlSample.FullName.Contains("37")) continue;
+    if (!htmlSample.FullName.Contains("37") && !htmlSample.FullName.Contains("34")) continue;
 
     //await skia.GenerateSampleAsync(htmlSample);
     //await svgSkia.GenerateSampleAsync(htmlSample);
