@@ -70,6 +70,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// Flag that indicates that CssTable algorithm already made fixes on it.
         /// </remarks>
         internal bool _tableFixed;
+        
+        /// <summary>
+        /// Flag indicating that we're on a second pass for laying out the element after 
+        /// avoiding a page break.
+        /// </summary>
+        internal bool _pageBreakAvoided;
 
         protected bool _wordsSizeMeasured;
         private CssBox _listItemBox;
@@ -651,7 +657,9 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                     Size = new RSize(width - ActualMarginLeft - ActualMarginRight, Size.Height);
                 }
 
-                if (Display != CssConstants.TableCell)
+                // Don't recalculate the element's position if we're 
+                // on our second pass after avoiding a page break.
+                if (Display != CssConstants.TableCell && !_pageBreakAvoided)
                 {
                     double left;
                     double top;
@@ -745,21 +753,29 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
             if (!IsFixed && !IsAbsolute)
             {
-                var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < 90999 ? ActualRight - HtmlContainer.Root.Location.X : 0);
-                HtmlContainer.ActualSize = CommonUtils.Max(HtmlContainer.ActualSize, new RSize(actualWidth, ActualBottom - HtmlContainer.Root.Location.Y));
-
-                if (this.PageBreakInside == CssConstants.Avoid && prevSibling != null 
-                    && Display != CssConstants.TableCell)
+                if (PageBreakInside == CssConstants.Avoid 
+                    && prevSibling != null 
+                    && Display != CssConstants.TableCell
+                    && !_pageBreakAvoided)
                 {
                     // handle page break avoiding.
                     var pageLocationY = Location.Y % HtmlContainer.PageSize.Height;
                     if (Size.Height + pageLocationY > HtmlContainer.PageSize.Height)
                     {
-                        // offset the current box and all of it's children to the next page.
-                        var offset = HtmlContainer.PageSize.Height - pageLocationY;
-                        OffsetTop(offset + 1);
+                        // if we break page, we'll do another pass at PerformLayoutAsync
+                        // so that child elements are re-positioned correctly.
+                        BreakPage(true);
+                        _pageBreakAvoided = true;
+                        await this.PerformLayoutAsync(g);
+
+                        // We'll set this flag back to false as this element
+                        // might need re-positioning by its parent.
+                        _pageBreakAvoided = false;
                     }
                 }
+
+                var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < 90999 ? ActualRight - HtmlContainer.Root.Location.X : 0);
+                HtmlContainer.ActualSize = CommonUtils.Max(HtmlContainer.ActualSize, new RSize(actualWidth, ActualBottom - HtmlContainer.Root.Location.Y));
             }
         }
 
