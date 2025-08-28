@@ -107,7 +107,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp.Adapters
             return new BrushAdapter(new SKBrush(Utils.Convert(rect), Utils.Convert(color1), Utils.Convert(color2), (float)angle));
         }
 
-        protected override RImage ConvertImageInt(object image)
+        protected override RImage? ConvertImageInt(object image)
         {
             return image != null ? new ImageAdapter((SKImage)image) : null;
         }

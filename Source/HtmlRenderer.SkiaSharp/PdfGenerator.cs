@@ -74,9 +74,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             string html,
             Stream outputStream,
             int margin = 20, 
-            CssData cssData = null, 
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null, 
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+            CssData? cssData = null, 
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null, 
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
 
             var config = new PdfGenerateConfig();
@@ -99,9 +99,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             string html,
             Stream outputStream,            
             PdfGenerateConfig config, 
-            CssData cssData = null, 
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null, 
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+            CssData? cssData = null, 
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null, 
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
             // create PDF document to render the HTML into
             var document = SKDocument.CreatePdf(outputStream, DefaultDPI);
@@ -123,7 +123,14 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         /// <param name="stylesheetLoad">optional: can be used to overwrite stylesheet resolution logic</param>
         /// <param name="imageLoad">optional: can be used to overwrite image resolution logic</param>
         /// <returns>the generated image of the html</returns>
-        public static async Task AddPdfPages(SKDocument document, string html, PageSize pageSize, int margin = 20, CssData cssData = null, EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null, EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+        public static async Task AddPdfPages(
+            SKDocument document,
+            string html,
+            PageSize pageSize,
+            int margin = 20,
+            CssData? cssData = null,
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null,
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
             var config = new PdfGenerateConfig();
             config.PageSize = pageSize;
@@ -145,9 +152,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             SKDocument document, 
             string html, 
             PdfGenerateConfig config, 
-            CssData cssData = null, 
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null, 
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+            CssData? cssData = null, 
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null, 
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
             //TODO: https://github.com/mono/SkiaSharp/issues/848
             //Perhaps we could subset the fonts so the pdf's generated weren't as large.  Success has been reported

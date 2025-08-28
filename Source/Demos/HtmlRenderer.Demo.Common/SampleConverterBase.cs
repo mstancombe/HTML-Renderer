@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -20,7 +21,7 @@ namespace HtmlRenderer.Demo.Common
             this.OnStyleLoaded += StylesheetLoad;
         }
 
-        public CssData CssData => null;
+        public CssData? CssData => null;
 
         protected EventHandler<HtmlImageLoadEventArgs> OnImageLoaded;
         protected EventHandler<HtmlStylesheetLoadEventArgs> OnStyleLoaded;
@@ -63,3 +64,4 @@ namespace HtmlRenderer.Demo.Common
         }
     }
 }
+#nullable restore

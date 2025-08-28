@@ -114,9 +114,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp.Adapters
 		{
 			var fontAdapter = (FontAdapter)font;
 			var realFont = fontAdapter.Font;
-			var p = new SKPaint(realFont);
-			var boundingRect = new SKRect();
-			var measuredWidth = p.MeasureText(str, ref boundingRect);
+			var measuredWidth = realFont.MeasureText(str, out var boundingRect);
 
 			if (font.Height < 0)
 			{

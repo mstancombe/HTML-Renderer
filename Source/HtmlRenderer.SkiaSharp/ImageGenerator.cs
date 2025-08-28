@@ -72,9 +72,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             Stream outputStream,
             int width,
             int? height = null,
-            CssData cssData = null,
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null,
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+            CssData? cssData = null,
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null,
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
             using (var container = await CreateHtmlContainer(html, width, cssData, stylesheetLoad, imageLoad))
             {
@@ -102,9 +102,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             int width,
             int? height = null,
             int quality = 100,
-            CssData cssData = null,
-            EventHandler<HtmlStylesheetLoadEventArgs> stylesheetLoad = null,
-            EventHandler<HtmlImageLoadEventArgs> imageLoad = null)
+            CssData? cssData = null,
+            EventHandler<HtmlStylesheetLoadEventArgs>? stylesheetLoad = null,
+            EventHandler<HtmlImageLoadEventArgs>? imageLoad = null)
         {
             using (var container = await CreateHtmlContainer(html, width, cssData, stylesheetLoad, imageLoad))
             {

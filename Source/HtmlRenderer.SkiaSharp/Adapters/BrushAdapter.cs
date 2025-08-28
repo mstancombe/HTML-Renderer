@@ -56,9 +56,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp.Adapters
 
         public SKColor Color { get; set; }
 
-        public SKPathEffect PathEffect { get; set; }
+        public SKPathEffect? PathEffect { get; set; }
 
-        public SKShader Shader { get; set; }
+        public SKShader? Shader { get; set; }
 
 
         public SKBrush(SKColor color = default, Types type = Types.Solid) 

@@ -77,12 +77,21 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp.Adapters
         {
             if (_svg != null)
             {
-                //TODO: support the overload that passes a source rect.   Using Matrix overload perhaps?..
-                var matrix = SKMatrix.CreateTranslation(dstRect.Left, dstRect.Top);
-                matrix.ScaleX = dstRect.Width / _svg.Picture.CullRect.Width;
-                matrix.ScaleY = dstRect.Height / _svg.Picture.CullRect.Height;
+                if (_svg.Picture == null)
+                {
+                    //Can't really draw anything..
+                    //TODO: do we draw a 'not found' image?.. for now going to just leave canvas unrendered.  Previously
+                    //this wasn't null checking Picture, so would have thrown an error.
+                }
+                else
+                {
+                    //TODO: support the overload that passes a source rect.   Using Matrix overload perhaps?..
+                    var matrix = SKMatrix.CreateTranslation(dstRect.Left, dstRect.Top);
+                    matrix.ScaleX = dstRect.Width / _svg.Picture.CullRect.Width;
+                    matrix.ScaleY = dstRect.Height / _svg.Picture.CullRect.Height;
 
-                canvas.DrawPicture(_svg.Picture, ref matrix);
+                    canvas.DrawPicture(_svg.Picture, in matrix);
+                }
             }
             else
             {

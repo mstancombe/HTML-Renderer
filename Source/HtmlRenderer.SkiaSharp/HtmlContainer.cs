@@ -256,7 +256,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         /// </summary>
         /// <param name="htmlSource">the html to init with, init empty if not given</param>
         /// <param name="baseCssData">optional: the stylesheet to init with, init default if not given</param>
-        public async Task SetHtml(string htmlSource, CssData baseCssData = null)
+        public async Task SetHtml(string htmlSource, CssData? baseCssData = null)
         {
             await _htmlContainerInt.SetHtml(htmlSource, baseCssData);
         }

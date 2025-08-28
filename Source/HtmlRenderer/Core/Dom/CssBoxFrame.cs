@@ -557,7 +557,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// Assigns words its width and height
         /// </summary>
         /// <param name="g">the device to use</param>
-        internal override async Task MeasureWordsSizeAsync(RGraphics g)
+        internal override Task MeasureWordsSizeAsync(RGraphics g)
         {
             if (!_wordsSizeMeasured)
             {
@@ -565,6 +565,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 _wordsSizeMeasured = true;
             }
             CssLayoutEngine.MeasureImageSize(_imageWord);
+            return Task.CompletedTask;
         }
 
         /// <summary>

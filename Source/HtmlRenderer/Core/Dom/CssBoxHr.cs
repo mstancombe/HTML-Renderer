@@ -39,10 +39,10 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// Performs layout of the DOM structure creating lines by set bounds restrictions.
         /// </summary>
         /// <param name="g">Device context to use</param>
-        protected override async Task PerformLayoutImpAsync(RGraphics g)
+        protected override Task PerformLayoutImpAsync(RGraphics g)
         {
             if (Display == CssConstants.None)
-                return;
+                return Task.CompletedTask;
 
             RectanglesReset();
 
@@ -87,13 +87,15 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             Size = new RSize(width, height);
 
             ActualBottom = Location.Y + ActualPaddingTop + ActualPaddingBottom + height;
+
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Paints the fragment
         /// </summary>
         /// <param name="g">the device to draw to</param>
-        protected override async Task PaintImpAsync(RGraphics g)
+        protected override Task PaintImpAsync(RGraphics g)
         {
             var offset = (HtmlContainer != null && !IsFixed) ? HtmlContainer.ScrollOffset : RPoint.Empty;
             var rect = new RRect(Bounds.X + offset.X, Bounds.Y + offset.Y, Bounds.Width, Bounds.Height);
@@ -117,6 +119,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 var b4 = g.GetSolidBrush(ActualBorderBottomColor);
                 BordersDrawHandler.DrawBorder(Border.Bottom, g, this, b4, rect);
             }
+            return Task.CompletedTask;
         }
     }
 }
