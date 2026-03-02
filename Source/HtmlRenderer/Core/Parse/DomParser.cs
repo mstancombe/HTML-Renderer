@@ -10,6 +10,7 @@
 // - Sun Tsu,
 // "The Art of War"
 
+using HtmlRenderer.Core.Parse;
 using System;
 using System.Globalization;
 using TheArtOfDev.HtmlRenderer.Adapters.Entities;
@@ -219,27 +220,13 @@ namespace TheArtOfDev.HtmlRenderer.Core.Parse
         /// <param name="cssData">the css data to use to get the matching css blocks</param>
         private static void AssignClassCssBlocks(CssBox box, CssData cssData)
         {
-            var classes = box.HtmlTag.TryGetAttribute("class");
 
-            var startIdx = 0;
-            while (startIdx < classes.Length)
+            var classAttribValue = box.HtmlTag.TryGetAttribute("class");
+            foreach (var classValue in CssParserUtils.ParseClasses(classAttribValue))
             {
-                while (startIdx < classes.Length && classes[startIdx] == ' ')
-                    startIdx++;
-
-                if (startIdx < classes.Length)
-                {
-                    var endIdx = classes.IndexOf(' ', startIdx);
-
-                    if (endIdx < 0)
-                        endIdx = classes.Length;
-
-                    var cls = "." + classes.Substring(startIdx, endIdx - startIdx);
-                    AssignCssBlocks(box, cssData, cls);
-                    AssignCssBlocks(box, cssData, box.HtmlTag.Name + cls);
-
-                    startIdx = endIdx + 1;
-                }
+                var cls = "." + classValue;
+                AssignCssBlocks(box, cssData, cls);
+                AssignCssBlocks(box, cssData, box.HtmlTag.Name + cls);
             }
         }
 
@@ -315,9 +302,14 @@ namespace TheArtOfDev.HtmlRenderer.Core.Parse
 
                     if (!matched && box.HtmlTag.HasAttribute("class"))
                     {
-                        var className = box.HtmlTag.TryGetAttribute("class");
-                        if (selector.Class.Equals("." + className, StringComparison.InvariantCultureIgnoreCase) || selector.Class.Equals(box.HtmlTag.Name + "." + className, StringComparison.InvariantCultureIgnoreCase))
-                            matched = true;
+                        var boxClassAttrib = box.HtmlTag.TryGetAttribute("class");
+                        var boxClasses = CssParserUtils.ParseClasses(boxClassAttrib);
+
+                        //TODO: this is better (previously didn't handle box with multiple classes), but still not quite right, as class names ARE case sensitive.
+                        matched = boxClasses.Any(bc =>
+                            selector.Class.Equals("." + bc, StringComparison.InvariantCultureIgnoreCase) ||
+                            selector.Class.Equals(box.HtmlTag.Name + "." + bc, StringComparison.InvariantCultureIgnoreCase)
+                        );
                     }
 
                     if (!matched && box.HtmlTag.HasAttribute("id"))

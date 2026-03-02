@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <style type="text/css">
+            .class-a div {
+                background-color: blue;
+            }
+
+            .class-a .class-b {
+                background-color: red;
+            }
+
+            .class-a.class-b {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="something class-a">
+            <div>This should be blue.</div>
+        </div>
+        <div class="class-a.class-b">
+            This should be yellow
+        </div>
+        <div class="class-a">
+            <div class="class-b">
+                This should be red
+            </div>
+            <span>
+                This should be white, as it's a span under class A, not a div.
+            </span>
+        </div>
+        <div class="class-b">
+            <div>This should be nothing special.</div>
+        </div>
+    </body>
+</html>
