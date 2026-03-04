@@ -140,8 +140,8 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 {
                     _imageLoadHandler = new ImageLoadHandler(HtmlContainer, OnLoadImageComplete);
 
-                    if (this.Content != null && this.Content != CssConstants.Normal)
-                        await _imageLoadHandler.LoadImageAsync(this.Content, HtmlTag != null ? HtmlTag.Attributes : null);
+                    if (Content != null && Content != CssConstants.Normal)
+                        await _imageLoadHandler.LoadImageAsync(Content, HtmlTag != null ? HtmlTag.Attributes : null);
                     else
                         await _imageLoadHandler.LoadImageAsync(GetAttribute("src"), HtmlTag != null ? HtmlTag.Attributes : null);
                 }

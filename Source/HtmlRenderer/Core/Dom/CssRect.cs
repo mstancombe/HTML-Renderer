@@ -39,11 +39,6 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// </summary>
         private RRect _rect;
 
-        /// <summary>
-        /// If the word is selected this points to the selection handler for more data
-        /// </summary>
-        private SelectionHandler _selection;
-
         #endregion
 
 
@@ -110,8 +105,6 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 ? OwnerBox.ActualWordSpacing
                 : 0;
 
-       
-
         /// <summary>
         /// Height of the rectangle
         /// </summary>
@@ -142,11 +135,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// If the word is selected this points to the selection handler for more data
         /// </summary>
-        public SelectionHandler Selection
-        {
-            get { return _selection; }
-            set { _selection = value; }
-        }
+        public SelectionHandler Selection { get; set; }
 
         /// <summary>
         /// was there a whitespace before the word chars (before trim)
@@ -193,32 +182,32 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// is the word is currently selected
         /// </summary>
-        public bool Selected => _selection != null;
+        public bool Selected => Selection != null;
 
         /// <summary>
         /// the selection start index if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public int SelectedStartIndex => _selection != null ? _selection.GetSelectingStartIndex(this) : -1;
+        public int SelectedStartIndex => Selection?.GetSelectingStartIndex(this) ?? -1;
 
         /// <summary>
         /// the selection end index if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public int SelectedEndIndexOffset => _selection != null ? _selection.GetSelectedEndIndexOffset(this) : -1;
+        public int SelectedEndIndexOffset => Selection?.GetSelectedEndIndexOffset(this) ?? -1;
 
         /// <summary>
         /// the selection start offset if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public double SelectedStartOffset => _selection != null ? _selection.GetSelectedStartOffset(this) : -1;
+        public double SelectedStartOffset => Selection?.GetSelectedStartOffset(this) ?? -1;
 
         /// <summary>
         /// the selection end offset if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public double SelectedEndOffset => _selection != null ? _selection.GetSelectedEndOffset(this) : -1;
+        public double SelectedEndOffset => Selection?.GetSelectedEndOffset(this) ?? -1;
 
         /// <summary>
         /// Gets or sets an offset to be considered in measurements
         /// </summary>
-        internal double LeftGlyphPadding => OwnerBox != null ? OwnerBox.ActualFont.LeftPadding : 0;
+        internal double LeftGlyphPadding => OwnerBox?.ActualFont.LeftPadding ?? 0;
 
         /// <summary>
         /// Represents this word for debugging purposes
@@ -231,17 +220,17 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
         public bool BreakPage()
         {
-            var container = this.OwnerBox.HtmlContainer;
+            var container = OwnerBox.HtmlContainer;
 
-            if (this.Height >= container.PageSize.Height)
+            if (Height >= container.PageSize.Height)
                 return false;
 
-            var remTop = (this.Top - container.MarginTop) % container.PageSize.Height;
-            var remBottom = (this.Bottom - container.MarginTop) % container.PageSize.Height;
+            var remTop = (Top - container.MarginTop) % container.PageSize.Height;
+            var remBottom = (Bottom - container.MarginTop) % container.PageSize.Height;
 
             if (remTop > remBottom)
             {
-                this.Top += container.PageSize.Height - remTop + 1;
+                Top += container.PageSize.Height - remTop + 1;
                 return true;
             }
 

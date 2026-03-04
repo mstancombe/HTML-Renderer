@@ -173,7 +173,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 if (Position == CssConstants.Fixed)
                     return true;
 
-                if (this.ParentBox == null)
+                if (ParentBox == null)
                     return false;
 
                 CssBox parent = this;
@@ -438,7 +438,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 if (Display != CssConstants.None && Visibility == CssConstants.Visible)
                 {
                     // use initial clip to draw blocks with Position = fixed. I.e. ignrore page margins
-                    if (this.Position == CssConstants.Fixed)
+                    if (Position == CssConstants.Fixed)
                     {
                         g.SuspendClipping();
                     }
@@ -466,7 +466,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                         await PaintImpAsync(g);
 
                     // Restore clips
-                    if (this.Position == CssConstants.Fixed)
+                    if (Position == CssConstants.Fixed)
                     {
                         g.ResumeClipping();
                     }
@@ -638,7 +638,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
                         if (positionedAncestor != null)
                         {
-                            var location = GetActualLocation(this.Left, this.Top);
+                            var location = GetActualLocation(Left, Top);
                             left = positionedAncestor.Location.X + location.X;
                             top = positionedAncestor.Location.Y + location.Y;
 
@@ -660,9 +660,9 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
                         Location = new RPoint(left, top);
 
-                        if (this.PageBreakBefore == CssConstants.Always || prevSibling?.PageBreakAfter == CssConstants.Always)
+                        if (PageBreakBefore == CssConstants.Always || prevSibling?.PageBreakAfter == CssConstants.Always)
                         {
-                            this.BreakPage(true);
+                            BreakPage(true);
                         }
 
                         //Start with the assumption this is zero height.
@@ -722,7 +722,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                         // so that child elements are re-positioned correctly.
                         BreakPage(true);
                         _pageBreakAvoided = true;
-                        await this.PerformLayoutAsync(g);
+                        await PerformLayoutAsync(g);
 
                         // We'll set this flag back to false as this element
                         // might need re-positioning by its parent.
@@ -1152,25 +1152,25 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
         public bool BreakPage(bool force = false)
         {
-            var container = this.HtmlContainer;
+            var container = HtmlContainer;
 
             bool shouldBreakToNextPage;
 
-            if (this.Size.Height >= container.PageSize.Height)
+            if (Size.Height >= container.PageSize.Height)
                 shouldBreakToNextPage = false;
             else
             {
-                var remTop = (this.Location.Y - container.MarginTop) % container.PageSize.Height;
-                var remBottom = (this.ActualBottom - container.MarginTop) % container.PageSize.Height;
+                var remTop = (Location.Y - container.MarginTop) % container.PageSize.Height;
+                var remBottom = (ActualBottom - container.MarginTop) % container.PageSize.Height;
 
                 shouldBreakToNextPage = remTop > remBottom;
             }
 
             if (force || shouldBreakToNextPage)
             {
-                var remTop = (this.Location.Y - container.MarginTop) % container.PageSize.Height;
+                var remTop = (Location.Y - container.MarginTop) % container.PageSize.Height;
                 var diff = container.PageSize.Height - remTop;
-                this.Location = new RPoint(this.Location.X, this.Location.Y + diff + 1);
+                Location = new RPoint(Location.X, Location.Y + diff + 1);
                 return true;
             }
             else
@@ -1571,8 +1571,8 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
         protected override RPoint GetActualLocation(string X, string Y)
         {
-            var left = CssValueParser.ParseLength(X, this.HtmlContainer.PageSize.Width, this, null);
-            var top = CssValueParser.ParseLength(Y, this.HtmlContainer.PageSize.Height, this, null);
+            var left = CssValueParser.ParseLength(X, HtmlContainer.PageSize.Width, this, null);
+            var top = CssValueParser.ParseLength(Y, HtmlContainer.PageSize.Height, this, null);
             return new RPoint(left, top);
         }
 
