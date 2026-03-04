@@ -492,7 +492,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
 
             // if table max width is limited by we need to lower the columns width even if it will result in clipping
             var maxWidth = GetMaxTableWidth();
-            if (maxWidth < 90999)
+            if (maxWidth < CssConstants.MaxWidth)
             {
                 widthSum = GetWidthSum();
                 if (maxWidth < widthSum)
@@ -894,7 +894,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             }
             else
             {
-                return 9999f;
+                return CssConstants.MaxWidth;
             }
         }
 

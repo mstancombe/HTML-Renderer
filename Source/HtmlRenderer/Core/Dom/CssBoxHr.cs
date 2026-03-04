@@ -65,7 +65,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 width = CssValueParser.ParseLength(Width, width, this);
             }
 
-            if (width < minwidth || width >= 9999)
+            if (width < minwidth || width >= CssConstants.MaxWidth)
                 width = minwidth;
 
             double height = ActualHeight;

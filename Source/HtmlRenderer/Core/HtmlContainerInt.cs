@@ -618,7 +618,7 @@ namespace TheArtOfDev.HtmlRenderer.Core
             if (_root != null)
             {
                 // if width is not restricted we set it to large value to get the actual later
-                _root.Size = new RSize(_maxSize.Width > 0 ? _maxSize.Width : 99999, 0);
+                _root.Size = new RSize(_maxSize.Width > 0 ? _maxSize.Width : CssConstants.MaxWidth, 0);
                 _root.Location = _location;
                 await _root.PerformLayoutAsync(g);
 

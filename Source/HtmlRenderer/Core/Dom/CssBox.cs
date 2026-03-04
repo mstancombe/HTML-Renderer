@@ -328,24 +328,15 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <returns>the new box</returns>
         public static CssBox CreateBox(HtmlTag tag, CssBox parent = null)
         {
-            ArgChecker.AssertArgNotNull(tag, "tag");
+            ArgChecker.AssertArgNotNull(tag, nameof(tag));
 
-            if (tag.Name == HtmlConstants.Img)
+            return tag.Name switch
             {
-                return new CssBoxImage(parent, tag);
-            }
-            else if (tag.Name == HtmlConstants.Iframe)
-            {
-                return new CssBoxFrame(parent, tag);
-            }
-            else if (tag.Name == HtmlConstants.Hr)
-            {
-                return new CssBoxHr(parent, tag);
-            }
-            else
-            {
-                return new CssBox(parent, tag);
-            }
+                HtmlConstants.Img => new CssBoxImage(parent, tag),
+                HtmlConstants.Iframe => new CssBoxFrame(parent, tag),
+                HtmlConstants.Hr => new CssBoxHr(parent, tag),
+                _ => new CssBox(parent, tag)
+            };
         }
 
         /// <summary>
@@ -364,7 +355,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <returns>the new box</returns>
         public static CssBox CreateBox(CssBox parent, HtmlTag tag = null, CssBox before = null)
         {
-            ArgChecker.AssertArgNotNull(parent, "parent");
+            ArgChecker.AssertArgNotNull(parent, nameof(parent));
 
             var newBox = new CssBox(parent, tag);
             newBox.InheritStyle();
@@ -403,7 +394,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <returns>the new block box</returns>
         public static CssBox CreateBlock(CssBox parent, HtmlTag tag = null, CssBox before = null)
         {
-            ArgChecker.AssertArgNotNull(parent, "parent");
+            ArgChecker.AssertArgNotNull(parent, nameof(parent));
 
             var newBox = CreateBox(parent, tag, before);
             newBox.Display = CssConstants.Block;
@@ -730,7 +721,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                     }
                 }
 
-                var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < 90999 ? ActualRight - HtmlContainer.Root.Location.X : 0);
+                var actualWidth = Math.Max(GetMinimumWidth() + GetWidthMarginDeep(this), Size.Width < CssConstants.MaxWidth ? ActualRight - HtmlContainer.Root.Location.X : 0);
                 HtmlContainer.ActualSize = CommonUtils.Max(HtmlContainer.ActualSize, new RSize(actualWidth, ActualBottom - HtmlContainer.Root.Location.Y));
             }
         }
@@ -939,7 +930,11 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                 var box = maxWidthWord.OwnerBox;
                 while (box != null)
                 {
-                    padding += box.ActualBorderRightWidth + box.ActualPaddingRight + box.ActualBorderLeftWidth + box.ActualPaddingLeft;
+                    padding += box.ActualBorderRightWidth + 
+                        box.ActualPaddingRight + 
+                        box.ActualBorderLeftWidth + 
+                        box.ActualPaddingLeft;
+
                     box = box != this ? box.ParentBox : null;
                 }
             }
@@ -982,7 +977,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         private static double GetWidthMarginDeep(CssBox box)
         {
             double sum = 0f;
-            if (box.Size.Width > 90999 || (box.ParentBox != null && box.ParentBox.Size.Width > 90999))
+            if (box.Size.Width > CssConstants.MaxWidth || (box.ParentBox != null && box.ParentBox.Size.Width > CssConstants.MaxWidth))
             {
                 while (box != null)
                 {
@@ -1028,7 +1023,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             GetMinMaxSumWords(this, ref min, ref maxSum, ref paddingSum, ref marginSum);
 
             maxWidth = paddingSum + maxSum;
-            minWidth = paddingSum + (min < 90999 ? min : 0);
+            minWidth = paddingSum + (min < CssConstants.MaxWidth ? min : 0);
         }
 
         /// <summary>
@@ -1185,7 +1180,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <returns>the calculated actual right value</returns>
         private double CalculateActualRight()
         {
-            if (ActualRight > 90999)
+            if (ActualRight > CssConstants.MaxWidth)
             {
                 var maxRight = 0d;
                 foreach (var box in Boxes)

@@ -13,10 +13,13 @@
 namespace TheArtOfDev.HtmlRenderer.Core.Utils
 {
     /// <summary>
-    /// String constants to avoid typing errors.
+    /// constants to avoid typing errors.
     /// </summary>
     internal static class CssConstants
     {
+
+        public const double MaxWidth = 99999;
+
         public const string Absolute = "absolute";
         public const string Always = "always";
         public const string Auto = "auto";

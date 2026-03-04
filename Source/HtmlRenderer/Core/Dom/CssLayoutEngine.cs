@@ -143,7 +143,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             (line, curx, cury, maxRight, maxBottom) = await FlowBoxAsync(g, blockBox, blockBox, limitRight, 0, startx, line, curx, cury, maxRight, maxBottom);
 
             // if width is not restricted we need to lower it to the actual width
-            if (blockBox.ActualRight >= 90999)
+            if (blockBox.ActualRight >= CssConstants.MaxWidth)
             {
                 blockBox.ActualRight = maxRight + blockBox.ActualPaddingRight + blockBox.ActualBorderRightWidth;
             }
@@ -553,24 +553,18 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
                     case CssConstants.Sub:
                         lineBox.SetBaseLine(g, box, baseline + lineBox.Rectangles[box].Height * .5f);
                         break;
+
                     case CssConstants.Super:
                         lineBox.SetBaseLine(g, box, baseline - lineBox.Rectangles[box].Height * .2f);
                         break;
+
                     case CssConstants.TextTop:
-
-                        break;
                     case CssConstants.TextBottom:
-
-                        break;
                     case CssConstants.Top:
-
-                        break;
                     case CssConstants.Bottom:
-
-                        break;
                     case CssConstants.Middle:
-
                         break;
+
                     default:
                         //case: baseline
                         lineBox.SetBaseLine(g, box, baseline);
