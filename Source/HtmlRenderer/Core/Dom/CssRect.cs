@@ -105,7 +105,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the actual width of whitespace between words.
         /// </summary>
-        public double ActualWordSpacing => (OwnerBox != null ? (HasSpaceAfter ? OwnerBox.ActualWordSpacing : 0) + (IsImage ? OwnerBox.ActualWordSpacing : 0) : 0);
+        public double ActualWordSpacing
+            => (OwnerBox != null && (HasSpaceAfter || IsImage))
+                ? OwnerBox.ActualWordSpacing
+                : 0;
+
+       
 
         /// <summary>
         /// Height of the rectangle
