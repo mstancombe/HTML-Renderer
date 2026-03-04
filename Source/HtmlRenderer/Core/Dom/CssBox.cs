@@ -161,6 +161,11 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             get { return (Display == CssConstants.Inline || Display == CssConstants.InlineBlock) && !IsBrElement; }
         }
 
+        public bool IsInlineBlock
+        {
+            get { return Display == CssConstants.InlineBlock; }
+        }
+
         /// <summary>
         /// is the box "Display" is "Block", is this is an block box and not inline.
         /// </summary>
