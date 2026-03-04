@@ -738,18 +738,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the bounds of the box
         /// </summary>
-        public RRect Bounds
-        {
-            get { return new RRect(Location, Size); }
-        }
+        public RRect Bounds => new RRect(Location, Size);
 
         /// <summary>
         /// Gets the width available on the box, counting padding and margin.
         /// </summary>
-        public double AvailableWidth
-        {
-            get { return Size.Width - ActualBorderLeftWidth - ActualPaddingLeft - ActualPaddingRight - ActualBorderRightWidth; }
-        }
+        public double AvailableWidth => Size.Width - ActualBorderLeftWidth - ActualPaddingLeft - ActualPaddingRight - ActualBorderRightWidth;
 
         /// <summary>
         /// Gets the right of the box. When setting, it will affect only the width of the box.
@@ -773,42 +767,27 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the left of the client rectangle (Where content starts rendering)
         /// </summary>
-        public double ClientLeft
-        {
-            get { return Location.X + ActualBorderLeftWidth + ActualPaddingLeft; }
-        }
+        public double ClientLeft => Location.X + ActualBorderLeftWidth + ActualPaddingLeft;
 
         /// <summary>
         /// Gets the top of the client rectangle (Where content starts rendering)
         /// </summary>
-        public double ClientTop
-        {
-            get { return Location.Y + ActualBorderTopWidth + ActualPaddingTop; }
-        }
+        public double ClientTop => Location.Y + ActualBorderTopWidth + ActualPaddingTop;
 
         /// <summary>
         /// Gets the right of the client rectangle
         /// </summary>
-        public double ClientRight
-        {
-            get { return ActualRight - ActualPaddingRight - ActualBorderRightWidth; }
-        }
+        public double ClientRight => ActualRight - ActualPaddingRight - ActualBorderRightWidth;
 
         /// <summary>
         /// Gets the bottom of the client rectangle
         /// </summary>
-        public double ClientBottom
-        {
-            get { return ActualBottom - ActualPaddingBottom - ActualBorderBottomWidth; }
-        }
+        public double ClientBottom => ActualBottom - ActualPaddingBottom - ActualBorderBottomWidth;
 
         /// <summary>
         /// Gets the client rectangle
         /// </summary>
-        public RRect ClientRectangle
-        {
-            get { return RRect.FromLTRB(ClientLeft, ClientTop, ClientRight, ClientBottom); }
-        }
+        public RRect ClientRectangle => RRect.FromLTRB(ClientLeft, ClientTop, ClientRight, ClientBottom);
 
         /// <summary>
         /// Gets the actual height
@@ -1192,18 +1171,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets a value indicating if at least one of the corners of the box is rounded
         /// </summary>
-        public bool IsRounded
-        {
-            get { return ActualBorderRadiusTopRight > 0f || ActualBorderRadiusTopLeft > 0f || ActualBorderRadiusBottomRight > 0f || ActualBorderRadiusBottomLeft > 0f; }
-        }
+        public bool IsRounded => ActualBorderRadiusTopRight > 0f || ActualBorderRadiusTopLeft > 0f || ActualBorderRadiusBottomRight > 0f || ActualBorderRadiusBottomLeft > 0f;
 
         /// <summary>
         /// Gets the actual width of whitespace between words.
         /// </summary>
-        public double ActualWordSpacing
-        {
-            get { return _actualWordSpacing; }
-        }
+        public double ActualWordSpacing => _actualWordSpacing;
 
         /// <summary>
         /// 
@@ -1272,10 +1245,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the actual font of the parent
         /// </summary>
-        public RFont ActualParentFont
-        {
-            get { return GetParent() == null ? ActualFont : GetParent().ActualFont; }
-        }
+        public RFont ActualParentFont => GetParent() == null ? ActualFont : GetParent().ActualFont;
 
         /// <summary>
         /// Gets the font that should be actually used to paint the text of the box

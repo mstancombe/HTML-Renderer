@@ -80,18 +80,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the source of the image (file path, URL or inline data)
         /// </summary>
-        public string Src
-        {
-            get { return _src; }
-        }
+        public string Src => _src;
 
         /// <summary>
         /// collection of all the attributes that are defined on the image element or CSS style
         /// </summary>
-        public Dictionary<string, string> Attributes
-        {
-            get { return _attributes; }
-        }
+        public Dictionary<string, string> Attributes => _attributes;
 
         /// <summary>
         /// Indicate the image load is handled asynchronously.

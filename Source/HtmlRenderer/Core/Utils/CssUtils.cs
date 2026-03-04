@@ -36,10 +36,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Utils
         /// <summary>
         /// Brush for selection background
         /// </summary>
-        public static RColor DefaultSelectionBackcolor
-        {
-            get { return _defaultSelectionBackcolor; }
-        }
+        public static RColor DefaultSelectionBackcolor => _defaultSelectionBackcolor;
 
         /// <summary>
         /// Gets the white space width of the specified box

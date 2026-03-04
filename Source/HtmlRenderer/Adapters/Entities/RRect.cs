@@ -145,10 +145,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         /// <returns>
         ///     The x-coordinate of the left edge of this <see cref="RRect" /> structure.
         /// </returns>
-        public double Left
-        {
-            get { return X; }
-        }
+        public double Left => X;
 
         /// <summary>
         ///     Gets the y-coordinate of the top edge of this <see cref="RRect" /> structure.
@@ -156,10 +153,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         /// <returns>
         ///     The y-coordinate of the top edge of this <see cref="RRect" /> structure.
         /// </returns>
-        public double Top
-        {
-            get { return Y; }
-        }
+        public double Top => Y;
 
         /// <summary>
         ///     Gets the x-coordinate that is the sum of <see cref="RRect.X" /> and
@@ -173,10 +167,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         ///         cref="RRect.Width" />
         ///     of this <see cref="RRect" /> structure.
         /// </returns>
-        public double Right
-        {
-            get { return X + Width; }
-        }
+        public double Right => X + Width;
 
         /// <summary>
         ///     Gets the y-coordinate that is the sum of <see cref="RRect.Y" /> and
@@ -190,10 +181,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         ///         cref="RRect.Height" />
         ///     of this <see cref="RRect" /> structure.
         /// </returns>
-        public double Bottom
-        {
-            get { return Y + Height; }
-        }
+        public double Bottom => Y + Height;
 
         /// <summary>
         ///     Tests whether the <see cref="RRect.Width" /> or

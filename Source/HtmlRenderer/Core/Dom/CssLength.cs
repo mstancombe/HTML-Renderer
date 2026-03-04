@@ -109,52 +109,34 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the number in the length
         /// </summary>
-        public double Number
-        {
-            get { return _number; }
-        }
+        public double Number => _number;
 
         /// <summary>
         /// Gets if the length has some parsing error
         /// </summary>
-        public bool HasError
-        {
-            get { return _hasError; }
-        }
+        public bool HasError => _hasError;
 
 
         /// <summary>
         /// Gets if the length represents a precentage (not actually a length)
         /// </summary>
-        public bool IsPercentage
-        {
-            get { return _isPercentage; }
-        }
+        public bool IsPercentage => _isPercentage;
 
 
         /// <summary>
         /// Gets if the length is specified in relative units
         /// </summary>
-        public bool IsRelative
-        {
-            get { return _isRelative; }
-        }
+        public bool IsRelative => _isRelative;
 
         /// <summary>
         /// Gets the unit of the length
         /// </summary>
-        public CssUnit Unit
-        {
-            get { return _unit; }
-        }
+        public CssUnit Unit => _unit;
 
         /// <summary>
         /// Gets the length as specified in the string
         /// </summary>
-        public string Length
-        {
-            get { return _length; }
-        }
+        public string Length => _length;
 
         #endregion
 

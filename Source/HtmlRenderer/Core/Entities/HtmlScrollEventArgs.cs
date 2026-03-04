@@ -38,18 +38,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the x location to scroll to
         /// </summary>
-        public double X
-        {
-            get { return _location.X; }
-        }
+        public double X => _location.X;
 
         /// <summary>
         /// the x location to scroll to
         /// </summary>
-        public double Y
-        {
-            get { return _location.Y; }
-        }
+        public double Y => _location.Y;
 
         public override string ToString()
         {

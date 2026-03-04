@@ -52,34 +52,22 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// Gets a list of boxes related with the linebox. 
         /// To know the words of the box inside this linebox, use the <see cref="WordsOf"/> method.
         /// </summary>
-        public List<CssBox> RelatedBoxes
-        {
-            get { return _relatedBoxes; }
-        }
+        public List<CssBox> RelatedBoxes => _relatedBoxes;
 
         /// <summary>
         /// Gets the words inside the linebox
         /// </summary>
-        public List<CssRect> Words
-        {
-            get { return _words; }
-        }
+        public List<CssRect> Words => _words;
 
         /// <summary>
         /// Gets the owner box
         /// </summary>
-        public CssBox OwnerBox
-        {
-            get { return _ownerBox; }
-        }
+        public CssBox OwnerBox => _ownerBox;
 
         /// <summary>
         /// Gets a List of rectangles that are to be painted on this linebox
         /// </summary>
-        public Dictionary<CssBox, RRect> Rectangles
-        {
-            get { return _rects; }
-        }
+        public Dictionary<CssBox, RRect> Rectangles => _rects;
 
         /// <summary>
         /// Get the height of this box line (the max height of all the words)

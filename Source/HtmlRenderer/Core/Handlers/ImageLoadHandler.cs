@@ -104,18 +104,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Handlers
         /// <summary>
         /// the image instance of the loaded image
         /// </summary>
-        public RImage Image
-        {
-            get { return _image; }
-        }
+        public RImage Image => _image;
 
         /// <summary>
         /// the image rectangle restriction as returned from image load event
         /// </summary>
-        public RRect Rectangle
-        {
-            get { return _imageRectangle; }
-        }
+        public RRect Rectangle => _imageRectangle;
 
         /// <summary>
         /// Set image of this image box by analyzing the src attribute.<br/>

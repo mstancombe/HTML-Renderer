@@ -47,25 +47,16 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         /// <summary>
         /// is control is pressed
         /// </summary>
-        public bool Control
-        {
-            get { return _control; }
-        }
+        public bool Control => _control;
 
         /// <summary>
         /// is 'A' key is pressed
         /// </summary>
-        public bool AKeyCode
-        {
-            get { return _aKeyCode; }
-        }
+        public bool AKeyCode => _aKeyCode;
 
         /// <summary>
         /// is 'C' key is pressed
         /// </summary>
-        public bool CKeyCode
-        {
-            get { return _cKeyCode; }
-        }
+        public bool CKeyCode => _cKeyCode;
     }
 }

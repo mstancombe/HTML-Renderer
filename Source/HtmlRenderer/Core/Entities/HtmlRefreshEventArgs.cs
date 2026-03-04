@@ -38,10 +38,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// is re-layout is required for the refresh
         /// </summary>
-        public bool Layout
-        {
-            get { return _layout; }
-        }
+        public bool Layout => _layout;
 
         public override string ToString()
         {

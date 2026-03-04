@@ -36,25 +36,16 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
             _endRow = startRow + Int32.Parse(extendedBox.GetAttribute("rowspan", "1")) - 1;
         }
 
-        public CssBox ExtendedBox
-        {
-            get { return _extendedBox; }
-        }
+        public CssBox ExtendedBox => _extendedBox;
 
         /// <summary>
         /// Gets the index of the row where box starts
         /// </summary>
-        public int StartRow
-        {
-            get { return _startRow; }
-        }
+        public int StartRow => _startRow;
 
         /// <summary>
         /// Gets the index of the row where box ends
         /// </summary>
-        public int EndRow
-        {
-            get { return _endRow; }
-        }
+        public int EndRow => _endRow;
     }
 }

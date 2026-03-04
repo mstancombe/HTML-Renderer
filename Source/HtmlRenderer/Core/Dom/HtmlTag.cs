@@ -55,27 +55,18 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the name of this tag
         /// </summary>
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name => _name;
 
         /// <summary>
         /// Gets collection of attributes and their value the html tag has
         /// </summary>
-        public Dictionary<string, string> Attributes
-        {
-            get { return _attributes; }
-        }
+        public Dictionary<string, string> Attributes => _attributes;
 
         /// <summary>
         /// Gets if the tag is single placed; in other words it doesn't have a separate closing tag; <br/>
         /// e.g. &lt;br&gt;
         /// </summary>
-        public bool IsSingle
-        {
-            get { return _isSingle; }
-        }
+        public bool IsSingle => _isSingle;
 
         /// <summary>
         /// is the html tag has attributes.

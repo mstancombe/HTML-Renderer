@@ -35,9 +35,6 @@ namespace TheArtOfDev.HtmlRenderer.Adapters.Entities
         /// <summary>
         /// Is the left mouse button participated in the event
         /// </summary>
-        public bool LeftButton
-        {
-            get { return _leftButton; }
-        }
+        public bool LeftButton => _leftButton;
     }
 }

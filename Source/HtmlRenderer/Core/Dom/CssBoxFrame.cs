@@ -104,26 +104,17 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Is the css box clickable ("a" element is clickable)
         /// </summary>
-        public override bool IsClickable
-        {
-            get { return true; }
-        }
+        public override bool IsClickable => true;
 
         /// <summary>
         /// Get the href link of the box (by default get "href" attribute)
         /// </summary>
-        public override string HrefLink
-        {
-            get { return _videoLinkUrl ?? GetAttribute("src"); }
-        }
+        public override string HrefLink => _videoLinkUrl ?? GetAttribute("src");
 
         /// <summary>
         /// is the iframe is of embeded video
         /// </summary>
-        public bool IsVideo
-        {
-            get { return _isVideo; }
-        }
+        public bool IsVideo => _isVideo;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

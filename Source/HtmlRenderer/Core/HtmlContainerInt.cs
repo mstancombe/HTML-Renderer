@@ -216,18 +216,12 @@ namespace TheArtOfDev.HtmlRenderer.Core
         /// <summary>
         /// 
         /// </summary>
-        internal RAdapter Adapter
-        {
-            get { return _adapter; }
-        }
+        internal RAdapter Adapter => _adapter;
 
         /// <summary>
         /// parser for CSS data
         /// </summary>
-        internal CssParser CssParser
-        {
-            get { return _cssParser; }
-        }
+        internal CssParser CssParser => _cssParser;
 
         /// <summary>
         /// Raised when the set html document has been fully loaded.<br/>
@@ -279,10 +273,7 @@ namespace TheArtOfDev.HtmlRenderer.Core
         /// <summary>
         /// the parsed stylesheet data used for handling the html
         /// </summary>
-        public CssData CssData
-        {
-            get { return _cssData; }
-        }
+        public CssData CssData => _cssData;
 
         /// <summary>
         /// Gets or sets a value indicating if anti-aliasing should be avoided for geometry like backgrounds and borders (default - false).
@@ -460,26 +451,17 @@ namespace TheArtOfDev.HtmlRenderer.Core
         /// <summary>
         /// Get the currently selected text segment in the html.
         /// </summary>
-        public string SelectedText
-        {
-            get { return _selectionHandler.GetSelectedText(); }
-        }
+        public string SelectedText => _selectionHandler.GetSelectedText();
 
         /// <summary>
         /// Copy the currently selected html segment with style.
         /// </summary>
-        public string SelectedHtml
-        {
-            get { return _selectionHandler.GetSelectedHtml(); }
-        }
+        public string SelectedHtml => _selectionHandler.GetSelectedHtml();
 
         /// <summary>
         /// the root css box of the parsed html
         /// </summary>
-        internal CssBox Root
-        {
-            get { return _root; }
-        }
+        internal CssBox Root => _root;
 
         /// <summary>
         /// the text fore color use for selected text

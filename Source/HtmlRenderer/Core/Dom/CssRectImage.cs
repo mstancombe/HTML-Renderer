@@ -16,7 +16,7 @@ using TheArtOfDev.HtmlRenderer.Adapters.Entities;
 namespace TheArtOfDev.HtmlRenderer.Core.Dom
 {
     /// <summary>
-    /// Represents a word inside an inline box
+    /// Represents an image inside an inline box
     /// </summary>
     internal sealed class CssRectImage : CssRect
     {
@@ -55,10 +55,7 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets if the word represents an image.
         /// </summary>
-        public override bool IsImage
-        {
-            get { return true; }
-        }
+        public override bool IsImage => true;
 
         /// <summary>
         /// the image rectange restriction as returned from image load event

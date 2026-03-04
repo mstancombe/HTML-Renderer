@@ -75,26 +75,17 @@ namespace TheArtOfDev.HtmlRenderer.Core.Utils
         /// <summary>
         /// the full string that this sub-string is part of
         /// </summary>
-        public string FullString
-        {
-            get { return _fullString; }
-        }
+        public string FullString => _fullString;
 
         /// <summary>
         /// the start index of the sub-string
         /// </summary>
-        public int StartIdx
-        {
-            get { return _startIdx; }
-        }
+        public int StartIdx => _startIdx;
 
         /// <summary>
         /// the length of the sub-string starting at <see cref="_startIdx"/>
         /// </summary>
-        public int Length
-        {
-            get { return _length; }
-        }
+        public int Length => _length;
 
         /// <summary>
         /// Get string char at specific index.

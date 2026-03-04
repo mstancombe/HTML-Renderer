@@ -41,17 +41,11 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// the box that has :hover css on
         /// </summary>
-        public CssBox CssBox
-        {
-            get { return _cssBox; }
-        }
+        public CssBox CssBox => _cssBox;
 
         /// <summary>
         /// the :hover style block data
         /// </summary>
-        public CssBlock CssBlock
-        {
-            get { return _cssBlock; }
-        }
+        public CssBlock CssBlock => _cssBlock;
     }
 }

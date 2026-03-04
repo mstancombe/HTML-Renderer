@@ -138,44 +138,27 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the children boxes of this box
         /// </summary>
-        public List<CssBox> Boxes
-        {
-            get { return _boxes; }
-        }
+        public List<CssBox> Boxes => _boxes;
 
         /// <summary>
         /// Is the box is of "br" element.
         /// </summary>
-        public bool IsBrElement
-        {
-            get {
-                return _htmltag != null && _htmltag.Name.Equals("br", StringComparison.InvariantCultureIgnoreCase);
-            }
-        }
+        public bool IsBrElement => _htmltag != null && _htmltag.Name.Equals("br", StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
         /// is the box "Display" is "Inline", is this is an inline box and not block.
         /// </summary>
-        public bool IsInline
-        {
-            get { return (Display == CssConstants.Inline || Display == CssConstants.InlineBlock) && !IsBrElement; }
-        }
+        public bool IsInline => (Display == CssConstants.Inline || Display == CssConstants.InlineBlock) && !IsBrElement;
 
         /// <summary>
         /// is the box "Display" is "Block", is this is an block box and not inline.
         /// </summary>
-        public bool IsBlock
-        {
-            get { return Display == CssConstants.Block; }
-        }
+        public bool IsBlock => Display == CssConstants.Block;
 
         /// <summary>
         /// Is the css box clickable (by default only "a" element is clickable)
         /// </summary>
-        public virtual bool IsClickable
-        {
-            get { return HtmlTag != null && HtmlTag.Name == HtmlConstants.A && !HtmlTag.HasAttribute("id"); }
-        }
+        public virtual bool IsClickable => HtmlTag != null && HtmlTag.Name == HtmlConstants.A && !HtmlTag.HasAttribute("id");
 
         /// <summary>
         /// Gets a value indicating whether this instance or one of its parents has Position = fixed.
@@ -213,18 +196,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <value>
         ///   <c>true</c> if this instance is fixed; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool IsAbsolute
-        {
-            get => Position == CssConstants.Absolute;
-        }
+        public virtual bool IsAbsolute => Position == CssConstants.Absolute;
 
         /// <summary>
         /// Get the href link of the box (by default get "href" attribute)
         /// </summary>
-        public virtual string HrefLink
-        {
-            get { return GetAttribute(HtmlConstants.Href); }
-        }
+        public virtual string HrefLink => GetAttribute(HtmlConstants.Href);
 
         /// <summary>
         /// Gets the containing block-box of this box. (The nearest parent box with display=block)
@@ -259,18 +236,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the HTMLTag that hosts this box
         /// </summary>
-        public HtmlTag HtmlTag
-        {
-            get { return _htmltag; }
-        }
+        public HtmlTag HtmlTag => _htmltag;
 
         /// <summary>
         /// Gets if this box represents an image
         /// </summary>
-        public bool IsImage
-        {
-            get { return Words.Count == 1 && Words[0].IsImage; }
-        }
+        public bool IsImage => Words.Count == 1 && Words[0].IsImage;
 
         /// <summary>
         /// Tells if the box is empty or contains just blank spaces
@@ -309,42 +280,27 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the line-boxes of this box (if block box)
         /// </summary>
-        internal List<CssLineBox> LineBoxes
-        {
-            get { return _lineBoxes; }
-        }
+        internal List<CssLineBox> LineBoxes => _lineBoxes;
 
         /// <summary>
         /// Gets the linebox(es) that contains words of this box (if inline)
         /// </summary>
-        internal List<CssLineBox> ParentLineBoxes
-        {
-            get { return _parentLineBoxes; }
-        }
+        internal List<CssLineBox> ParentLineBoxes => _parentLineBoxes;
 
         /// <summary>
         /// Gets the rectangles where this box should be painted
         /// </summary>
-        internal Dictionary<CssLineBox, RRect> Rectangles
-        {
-            get { return _rectangles; }
-        }
+        internal Dictionary<CssLineBox, RRect> Rectangles => _rectangles;
 
         /// <summary>
         /// Gets the BoxWords of text in the box
         /// </summary>
-        internal List<CssRect> Words
-        {
-            get { return _boxWords; }
-        }
+        internal List<CssRect> Words => _boxWords;
 
         /// <summary>
         /// Gets the first word of the box
         /// </summary>
-        internal CssRect FirstWord
-        {
-            get { return Words[0]; }
-        }
+        internal CssRect FirstWord => Words[0];
 
         /// <summary>
         /// Gets or sets the first linebox where content of this box appear

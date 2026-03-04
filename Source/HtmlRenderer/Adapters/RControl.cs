@@ -38,10 +38,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters
         /// <summary>
         /// The platform adapter.
         /// </summary>
-        public RAdapter Adapter
-        {
-            get { return _adapter; }
-        }
+        public RAdapter Adapter => _adapter;
 
         /// <summary>
         /// Is the left mouse button is currently in pressed state

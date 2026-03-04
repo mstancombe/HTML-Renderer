@@ -83,10 +83,7 @@ namespace TheArtOfDev.HtmlRenderer.Adapters
         /// <summary>
         /// Get the default CSS stylesheet data.
         /// </summary>
-        public CssData DefaultCssData
-        {
-            get { return _defaultCssData ?? (_defaultCssData = CssData.Parse(this, CssDefaults.DefaultStyleSheet, false)); }
-        }
+        public CssData DefaultCssData => _defaultCssData ?? (_defaultCssData = CssData.Parse(this, CssDefaults.DefaultStyleSheet, false));
 
         /// <summary>
         /// Resolve color value from given color name.

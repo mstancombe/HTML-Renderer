@@ -50,18 +50,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the name of the css class of the block
         /// </summary>
-        public string Class
-        {
-            get { return _class; }
-        }
+        public string Class => _class;
 
         /// <summary>
         /// is the selector item has to be direct parent
         /// </summary>
-        public bool DirectParent
-        {
-            get { return _directParent; }
-        }
+        public bool DirectParent => _directParent;
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.

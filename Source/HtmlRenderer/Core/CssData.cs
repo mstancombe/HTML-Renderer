@@ -70,10 +70,7 @@ namespace TheArtOfDev.HtmlRenderer.Core
         /// <summary>
         /// dictionary of media type to dictionary of css class name to the cssBlocks collection with all the data
         /// </summary>
-        internal IDictionary<string, Dictionary<string, List<CssBlock>>> MediaBlocks
-        {
-            get { return _mediaBlocks; }
-        }
+        internal IDictionary<string, Dictionary<string, List<CssBlock>>> MediaBlocks => _mediaBlocks;
 
         /// <summary>
         /// Check if there are css blocks for the given class selector.

@@ -48,18 +48,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the link href that was clicked
         /// </summary>
-        public string Link
-        {
-            get { return _link; }
-        }
+        public string Link => _link;
 
         /// <summary>
         /// collection of all the attributes that are defined on the link element
         /// </summary>
-        public Dictionary<string, string> Attributes
-        {
-            get { return _attributes; }
-        }
+        public Dictionary<string, string> Attributes => _attributes;
 
         /// <summary>
         /// use to cancel the execution of the link

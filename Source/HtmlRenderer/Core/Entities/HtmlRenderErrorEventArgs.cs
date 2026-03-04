@@ -56,26 +56,17 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// error type that is reported
         /// </summary>
-        public HtmlRenderErrorType Type
-        {
-            get { return _type; }
-        }
+        public HtmlRenderErrorType Type => _type;
 
         /// <summary>
         /// the error message
         /// </summary>
-        public string Message
-        {
-            get { return _message; }
-        }
+        public string Message => _message;
 
         /// <summary>
         /// the exception that occurred (can be null)
         /// </summary>
-        public Exception Exception
-        {
-            get { return _exception; }
-        }
+        public Exception Exception => _exception;
 
         public override string ToString()
         {

@@ -59,18 +59,15 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets the Box where this word belongs.
         /// </summary>
-        public CssBox OwnerBox
-        {
-            get { return _ownerBox; }
-        }
+        public CssBox OwnerBox => _ownerBox;
 
         /// <summary>
         /// Gets or sets the bounds of the rectangle
         /// </summary>
         public RRect Rectangle
         {
-            get { return _rect; }
-            set { _rect = value; }
+            get => _rect;
+            set => _rect = value;
         }
 
         /// <summary>
@@ -78,8 +75,8 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// </summary>
         public double Left
         {
-            get { return _rect.X; }
-            set { _rect.X = value; }
+            get => _rect.X;
+            set => _rect.X = value;
         }
 
         /// <summary>
@@ -103,18 +100,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Get the full width of the word including the spacing.
         /// </summary>
-        public double FullWidth
-        {
-            get { return _rect.Width + ActualWordSpacing; }
-        }
+        public double FullWidth => _rect.Width + ActualWordSpacing;
 
         /// <summary>
         /// Gets the actual width of whitespace between words.
         /// </summary>
-        public double ActualWordSpacing
-        {
-            get { return (OwnerBox != null ? (HasSpaceAfter ? OwnerBox.ActualWordSpacing : 0) + (IsImage ? OwnerBox.ActualWordSpacing : 0) : 0); }
-        }
+        public double ActualWordSpacing => (OwnerBox != null ? (HasSpaceAfter ? OwnerBox.ActualWordSpacing : 0) + (IsImage ? OwnerBox.ActualWordSpacing : 0) : 0);
 
         /// <summary>
         /// Height of the rectangle
@@ -155,18 +146,12 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// was there a whitespace before the word chars (before trim)
         /// </summary>
-        public virtual bool HasSpaceBefore
-        {
-            get { return false; }
-        }
+        public virtual bool HasSpaceBefore => false;
 
         /// <summary>
         /// was there a whitespace after the word chars (before trim)
         /// </summary>
-        public virtual bool HasSpaceAfter
-        {
-            get { return false; }
-        }
+        public virtual bool HasSpaceAfter => false;
 
         /// <summary>
         /// Gets the image this words represents (if one exists)
@@ -182,83 +167,53 @@ namespace TheArtOfDev.HtmlRenderer.Core.Dom
         /// <summary>
         /// Gets if the word represents an image.
         /// </summary>
-        public virtual bool IsImage
-        {
-            get { return false; }
-        }
+        public virtual bool IsImage => false;
 
         /// <summary>
         /// Gets a bool indicating if this word is composed only by spaces.
         /// Spaces include tabs and line breaks
         /// </summary>
-        public virtual bool IsSpaces
-        {
-            get { return true; }
-        }
+        public virtual bool IsSpaces => true;
 
         /// <summary>
         /// Gets if the word is composed by only a line break
         /// </summary>
-        public virtual bool IsLineBreak
-        {
-            get { return false; }
-        }
+        public virtual bool IsLineBreak => false;
 
         /// <summary>
         /// Gets the text of the word
         /// </summary>
-        public virtual string Text
-        {
-            get { return null; }
-        }
+        public virtual string Text => null;
 
         /// <summary>
         /// is the word is currently selected
         /// </summary>
-        public bool Selected
-        {
-            get { return _selection != null; }
-        }
+        public bool Selected => _selection != null;
 
         /// <summary>
         /// the selection start index if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public int SelectedStartIndex
-        {
-            get { return _selection != null ? _selection.GetSelectingStartIndex(this) : -1; }
-        }
+        public int SelectedStartIndex => _selection != null ? _selection.GetSelectingStartIndex(this) : -1;
 
         /// <summary>
         /// the selection end index if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public int SelectedEndIndexOffset
-        {
-            get { return _selection != null ? _selection.GetSelectedEndIndexOffset(this) : -1; }
-        }
+        public int SelectedEndIndexOffset => _selection != null ? _selection.GetSelectedEndIndexOffset(this) : -1;
 
         /// <summary>
         /// the selection start offset if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public double SelectedStartOffset
-        {
-            get { return _selection != null ? _selection.GetSelectedStartOffset(this) : -1; }
-        }
+        public double SelectedStartOffset => _selection != null ? _selection.GetSelectedStartOffset(this) : -1;
 
         /// <summary>
         /// the selection end offset if the word is partially selected (-1 if not selected or fully selected)
         /// </summary>
-        public double SelectedEndOffset
-        {
-            get { return _selection != null ? _selection.GetSelectedEndOffset(this) : -1; }
-        }
+        public double SelectedEndOffset => _selection != null ? _selection.GetSelectedEndOffset(this) : -1;
 
         /// <summary>
         /// Gets or sets an offset to be considered in measurements
         /// </summary>
-        internal double LeftGlyphPadding
-        {
-            get { return OwnerBox != null ? OwnerBox.ActualFont.LeftPadding : 0; }
-        }
+        internal double LeftGlyphPadding => OwnerBox != null ? OwnerBox.ActualFont.LeftPadding : 0;
 
         /// <summary>
         /// Represents this word for debugging purposes

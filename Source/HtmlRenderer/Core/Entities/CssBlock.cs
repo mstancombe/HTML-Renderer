@@ -71,34 +71,22 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the name of the css class of the block
         /// </summary>
-        public string Class
-        {
-            get { return _class; }
-        }
+        public string Class => _class;
 
         /// <summary>
         /// additional selectors to used in hierarchy (p className1 > className2)
         /// </summary>
-        public List<CssBlockSelectorItem> Selectors
-        {
-            get { return _selectors; }
-        }
+        public List<CssBlockSelectorItem> Selectors => _selectors;
 
         /// <summary>
         /// Gets the CSS block properties and its values
         /// </summary>
-        public IDictionary<string, string> Properties
-        {
-            get { return _properties; }
-        }
+        public IDictionary<string, string> Properties => _properties;
 
         /// <summary>
         /// is the css block has :hover pseudo-class
         /// </summary>
-        public bool Hover
-        {
-            get { return _hover; }
-        }
+        public bool Hover => _hover;
 
         /// <summary>
         /// Merge the other block properties into this css block.<br/>

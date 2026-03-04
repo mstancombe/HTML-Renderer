@@ -46,42 +46,27 @@ namespace TheArtOfDev.HtmlRenderer.Core.Entities
         /// <summary>
         /// the id of the link element if present
         /// </summary>
-        public string Id
-        {
-            get { return _id; }
-        }
+        public string Id => _id;
 
         /// <summary>
         /// the href data of the link
         /// </summary>
-        public string Href
-        {
-            get { return _href; }
-        }
+        public string Href => _href;
 
         /// <summary>
         /// the rectangle of element as calculated by html layout
         /// </summary>
-        public T Rectangle
-        {
-            get { return _rectangle; }
-        }
+        public T Rectangle => _rectangle;
 
         /// <summary>
         /// Is the link is directed to another element in the html
         /// </summary>
-        public bool IsAnchor
-        {
-            get { return _href.Length > 0 && _href[0] == '#'; }
-        }
+        public bool IsAnchor => _href.Length > 0 && _href[0] == '#';
 
         /// <summary>
         /// Return the id of the element this anchor link is referencing.
         /// </summary>
-        public string AnchorId
-        {
-            get { return IsAnchor && _href.Length > 1 ? _href.Substring(1) : string.Empty; }
-        }
+        public string AnchorId => IsAnchor && _href.Length > 1 ? _href.Substring(1) : string.Empty;
 
         public override string ToString()
         {
