@@ -24,12 +24,14 @@ var samples = SamplesLoader.TestSamples;
 foreach (var htmlSample in samples)
 {
     ////Just doing one test here.  Comment this for all of them.
-    if (!htmlSample.FullName.Contains("10")) continue;
+    if (!htmlSample.FullName.Contains("35")) continue;
 
-    //await skia.GenerateSampleAsync(htmlSample);
-    //await svgSkia.GenerateSampleAsync(htmlSample);
-    await pdfSharp.GenerateSampleAsync(htmlSample);
-    //await pdfSharp.GenerateSampleAsync(htmlSample, .5);
+    await skia.GenerateSampleAsync(htmlSample, margin: 30);
+    await skia.GenerateSampleAsync(htmlSample, .5f, margin: 30);
+
+    //await svgSkia.GenerateSampleAsync(htmlSample, .5);
+    await pdfSharp.GenerateSampleAsync(htmlSample, margin: 30);
+    await pdfSharp.GenerateSampleAsync(htmlSample, .5, margin: 30);
 }
 
 

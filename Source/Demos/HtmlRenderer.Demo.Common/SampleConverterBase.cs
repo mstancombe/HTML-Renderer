@@ -56,11 +56,15 @@ namespace HtmlRenderer.Demo.Common
             _thisTypeName = this.GetType().Name;
         }
 
-        protected string GetSamplePath(HtmlSample sample, string extension = ".pdf")
+        protected string GetSamplePath(HtmlSample sample, string extension = ".pdf", int zoomLevelPercent = 100)
         {
             var path = Path.Combine(_basePath, _sampleRunIdentifier);
             Directory.CreateDirectory(path);
-            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + extension);
+            string zoomSuffix = zoomLevelPercent != 100
+                ? "zoom_" + zoomLevelPercent
+                : "";
+
+            return Path.Combine(path, sample.FullName + _thisTypeName + "_" + zoomSuffix + extension);
         }
     }
 }

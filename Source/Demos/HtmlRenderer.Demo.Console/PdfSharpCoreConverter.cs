@@ -15,20 +15,20 @@ namespace HtmlRenderer.Demo.Console
         {
         }
 
-        public async Task GenerateSampleAsync(HtmlSample sample, double zoomLevel = 1)
+        public async Task GenerateSampleAsync(HtmlSample sample, double zoomLevel = 1, int margin = 0)
         {
             var config = new PdfGenerateConfig();
 
             config.PageSize = PdfSharpCore.PageSize.A4;
-            config.MarginLeft = 0;
-            config.MarginRight = 0;
-            config.MarginTop = 0;
-            config.MarginBottom = 0;
+            config.MarginLeft = margin;
+            config.MarginRight = margin;
+            config.MarginTop = margin;
+            config.MarginBottom = margin;
 
             config.ZoomLevel = zoomLevel;
-
+            
             var pdf = await PdfGenerator.GeneratePdfAsync(sample.Html, config, imageLoad: OnImageLoaded);
-            pdf.Save(GetSamplePath(sample));
+            pdf.Save(GetSamplePath(sample, zoomLevelPercent: (int)(config.ZoomLevel * 100)));
         }
     }
 }

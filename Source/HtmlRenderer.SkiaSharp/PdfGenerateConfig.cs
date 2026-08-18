@@ -97,6 +97,11 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         private PageOrientation _pageOrientation;
 
         /// <summary>
+        /// the zoom level for the page.
+        /// </summary>
+        private float _zoomLevel;
+
+        /// <summary>
         /// the top margin between the page start and the text
         /// </summary>
         private int _marginTop;
@@ -144,6 +149,18 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             set { _pageOrientation = value; }
         }
 
+        /// <summary>
+        /// The zoom level for the page as a percent, defaults to 1 (100%).
+        /// </summary>
+        public float ZoomLevel
+        {
+            get { return _zoomLevel; }
+            set
+            {
+                if (value > 0)
+                    _zoomLevel = value;
+            }
+        }
 
         /// <summary>
         /// the top margin between the page start and the text

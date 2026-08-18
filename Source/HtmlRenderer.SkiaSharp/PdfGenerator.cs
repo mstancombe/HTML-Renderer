@@ -177,7 +177,26 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
                 orgPageSize = new SKSize(orgPageSize.Height, orgPageSize.Width);
             }
 
-            var pageSize = new SKSize(orgPageSize.Width - config.MarginLeft - config.MarginRight, orgPageSize.Height - config.MarginTop - config.MarginBottom);
+            var pdfPageSize = orgPageSize;
+
+            var marginLeft = config.MarginLeft;
+            var marginRight = config.MarginRight;
+            var marginTop = config.MarginTop;
+            var marginBottom = config.MarginBottom;
+
+            if (config.ZoomLevel != 1)
+            {
+                // let the layout engine render onto a smaller page, as we'll scale it up when we
+                // render it to the PDF.
+                orgPageSize = new SKSize(orgPageSize.Width / config.ZoomLevel, orgPageSize.Height / config.ZoomLevel);
+                marginLeft = (int)((float)marginLeft / config.ZoomLevel);
+                marginRight = (int)((float)marginRight / config.ZoomLevel);
+                marginTop = (int)((float)marginTop / config.ZoomLevel);
+                marginBottom = (int)((float)marginBottom / config.ZoomLevel);
+            }
+
+            var pageSize = new SKSize(orgPageSize.Width - marginLeft - marginRight, 
+                orgPageSize.Height - marginTop - marginBottom);
 
             if (!string.IsNullOrEmpty(html))
             {
@@ -188,14 +207,14 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
                     if (imageLoad != null)
                         container.ImageLoad += imageLoad;
 
-                    container.Location = new SKPoint(config.MarginLeft, config.MarginTop);
+                    container.Location = new SKPoint(marginLeft, marginTop);
                     container.MaxSize = new SKSize(pageSize.Width, 0);
                     await container.SetHtml(html, cssData);
                     container.PageSize = pageSize;
-                    container.MarginBottom = config.MarginBottom;
-                    container.MarginLeft = config.MarginLeft;
-                    container.MarginRight = config.MarginRight;
-                    container.MarginTop = config.MarginTop;
+                    container.MarginBottom = marginBottom;
+                    container.MarginLeft = marginLeft;
+                    container.MarginRight = marginRight;
+                    container.MarginTop = marginTop;
 
                     // layout the HTML with the page width restriction to know how many pages are required
                     var docImageInfo = new SKImageInfo((int)pageSize.Width, (int)pageSize.Height);
@@ -209,10 +228,10 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
                     double scrollOffset = 0;
                     while (scrollOffset > -container.ActualSize.Height)
                     {
-                        using (var pageCanvas = document.BeginPage(orgPageSize.Width, orgPageSize.Height))
+                        using (var pageCanvas = document.BeginPage(pdfPageSize.Width, pdfPageSize.Height))
                         {
-                            pageCanvas.ClipRect(new SKRect(config.MarginLeft, config.MarginTop, config.MarginLeft + pageSize.Width, config.MarginTop + pageSize.Height));
-
+                            pageCanvas.ClipRect(new SKRect(0, 0, pdfPageSize.Width, pdfPageSize.Height));
+                            pageCanvas.Scale(config.ZoomLevel);
                             container.ScrollOffset = new SKPoint(0, (float)scrollOffset);
 
                             await container.PerformPaint(pageCanvas);
@@ -224,7 +243,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
                     }
 
                     // add web links and anchors
-                    HandleLinks(document, container, orgPageSize, pageSize);
+                    HandleLinks(document, container, orgPageSize, pageSize, config.ZoomLevel);
 
                     document.Close();
                 }
@@ -238,7 +257,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         /// <summary>
         /// Handle HTML links by create PDF Documents link either to external URL or to another page in the document.
         /// </summary>
-        private static void HandleLinks(SKDocument document, HtmlContainer container, SKSize orgPageSize, SKSize pageSize)
+        private static void HandleLinks(SKDocument document, HtmlContainer container, SKSize orgPageSize, SKSize pageSize, float zoomLevel)
         {
             //TODO: Annotations might work for this..
             //https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skcanvas.drawannotation?view=skiasharp-2.88
@@ -246,6 +265,9 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
             /*
             foreach (var link in container.GetLinks())
             {
+                TODO: leaving this as non compilable, the zoomlevel would need to be taken
+                into account just like it is for the PdfSharp converter
+
                 int i = (int)(link.Rectangle.Top / pageSize.Height);
                 for (; i < document.Pages.Count && pageSize.Height * i < link.Rectangle.Bottom; i++)
                 {
