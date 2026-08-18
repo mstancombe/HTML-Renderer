@@ -140,6 +140,15 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
                 orgPageSize = new XSize(orgPageSize.Height, orgPageSize.Width);
             }
 
+            var pdfPageSize = orgPageSize;
+
+            if (config.ZoomLevel != 1)
+            {
+                // let the layout engine render onto a smaller page, as we'll scale it up when we
+                // render it to the PDF.
+                orgPageSize = new XSize(orgPageSize.Width / config.ZoomLevel, orgPageSize.Height / config.ZoomLevel);
+            }
+
             var pageSize = new XSize(orgPageSize.Width - config.MarginLeft - config.MarginRight, orgPageSize.Height - config.MarginTop - config.MarginBottom);
 
             if (!string.IsNullOrEmpty(html))
@@ -171,13 +180,16 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
                     while (scrollOffset > -container.ActualSize.Height)
                     {
                         var page = document.AddPage();
-                        page.Height = orgPageSize.Height;
-                        page.Width = orgPageSize.Width;
+                        page.Height = pdfPageSize.Height;
+                        page.Width = pdfPageSize.Width;
 
                         using (var g = XGraphics.FromPdfPage(page))
                         {
                             //g.IntersectClip(new XRect(config.MarginLeft, config.MarginTop, pageSize.Width, pageSize.Height));
                             g.IntersectClip(new XRect(0, 0, page.Width, page.Height));
+
+                            if (config.ZoomLevel != 1)
+                                g.ScaleTransform(config.ZoomLevel);
 
                             container.ScrollOffset = new XPoint(0, scrollOffset);
                             await container.PerformPaintAsync(g);
@@ -186,7 +198,7 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
                     }
 
                     // add web links and anchors
-                    HandleLinks(document, container, orgPageSize, pageSize);
+                    HandleLinks(document, container, pdfPageSize, pageSize, config.ZoomLevel);
                 }
             }
         }
@@ -198,17 +210,25 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
         /// <summary>
         /// Handle HTML links by create PDF Documents link either to external URL or to another page in the document.
         /// </summary>
-        private static void HandleLinks(PdfDocument document, HtmlContainer container, XSize orgPageSize, XSize pageSize)
+        private static void HandleLinks(PdfDocument document, HtmlContainer container, XSize pdfPageSize, XSize pageSize, double zoomLevel)
         {
             foreach (var link in container.GetLinks())
             {
                 int i = (int)(link.Rectangle.Top / pageSize.Height);
                 for (; i < document.Pages.Count && pageSize.Height * i < link.Rectangle.Bottom; i++)
                 {
-                    var offset = pageSize.Height * i;
+                    //Zoom as required.
+                    var offset = pageSize.Height * i * zoomLevel;
+                    var linkRect = new XRect
+                    {
+                        X = link.Rectangle.Left * zoomLevel,
+                        Y = link.Rectangle.Top * zoomLevel,
+                        Width = link.Rectangle.Width * zoomLevel,
+                        Height = link.Rectangle.Height * zoomLevel
+                    };
 
                     // fucking position is from the bottom of the page
-                    var xRect = new XRect(link.Rectangle.Left, orgPageSize.Height - (link.Rectangle.Height + link.Rectangle.Top - offset), link.Rectangle.Width, link.Rectangle.Height);
+                    var xRect = new XRect(linkRect.Left, pdfPageSize.Height - (linkRect.Height + linkRect.Top - offset), linkRect.Width, linkRect.Height);
 
                     if (link.IsAnchor)
                     {
