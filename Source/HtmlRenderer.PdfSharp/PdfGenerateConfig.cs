@@ -40,7 +40,7 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
         /// <summary>
         /// the zoom level for the page.
         /// </summary>
-        private double _zoomLevel;
+        private double _zoomLevel = 1;
 
         /// <summary>
         /// the top margin between the page start and the text

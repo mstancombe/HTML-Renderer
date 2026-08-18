@@ -99,7 +99,7 @@ namespace TheArtOfDev.HtmlRenderer.SkiaSharp
         /// <summary>
         /// the zoom level for the page.
         /// </summary>
-        private float _zoomLevel;
+        private float _zoomLevel = 1;
 
         /// <summary>
         /// the top margin between the page start and the text
