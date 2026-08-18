@@ -38,6 +38,11 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
         private PageOrientation _pageOrientation;
 
         /// <summary>
+        /// the zoom level for the page.
+        /// </summary>
+        private double _zoomLevel;
+
+        /// <summary>
         /// the top margin between the page start and the text
         /// </summary>
         private int _marginTop;
@@ -84,6 +89,19 @@ namespace TheArtOfDev.HtmlRenderer.PdfSharp
         {
             get { return _pageOrientation; }
             set { _pageOrientation = value; }
+        }
+
+        /// <summary>
+        /// The zoom level for the page as a percent, defaults to 1 (100%).
+        /// </summary>
+        public double ZoomLevel
+        {
+            get { return _zoomLevel; }
+            set
+            {
+                if (value > 0)
+                    _zoomLevel = value;
+            }
         }
 
         /// <summary>

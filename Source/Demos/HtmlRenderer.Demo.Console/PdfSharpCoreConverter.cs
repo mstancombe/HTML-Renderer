@@ -15,7 +15,7 @@ namespace HtmlRenderer.Demo.Console
         {
         }
 
-        public async Task GenerateSampleAsync(HtmlSample sample)
+        public async Task GenerateSampleAsync(HtmlSample sample, double zoomLevel = 1)
         {
             var config = new PdfGenerateConfig();
 
@@ -24,6 +24,8 @@ namespace HtmlRenderer.Demo.Console
             config.MarginRight = 0;
             config.MarginTop = 0;
             config.MarginBottom = 0;
+
+            config.ZoomLevel = zoomLevel;
 
             var pdf = await PdfGenerator.GeneratePdfAsync(sample.Html, config, imageLoad: OnImageLoaded);
             pdf.Save(GetSamplePath(sample));
